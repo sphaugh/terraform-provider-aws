@@ -162,7 +162,7 @@ func testAccAWSBudgetsBudgetActionExists(resourceName string, config *budgets.Ac
 			return err
 		}
 
-		output, err := finder.ActionByAccountIDActionIDAndBudgetName(conn, accountID, actionID, budgetName)
+		output, err := finder.FindActionByAccountIDActionIDAndBudgetName(conn, accountID, actionID, budgetName)
 
 		if err != nil {
 			return err
@@ -188,7 +188,7 @@ func testAccAWSBudgetsBudgetActionDestroy(s *terraform.State) error {
 			return err
 		}
 
-		_, err = finder.ActionByAccountIDActionIDAndBudgetName(conn, accountID, actionID, budgetName)
+		_, err = finder.FindActionByAccountIDActionIDAndBudgetName(conn, accountID, actionID, budgetName)
 
 		if tfresource.NotFound(err) {
 			continue
