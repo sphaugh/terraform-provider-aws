@@ -586,7 +586,7 @@ func testAccCheckCloudWatchEventRuleExists(n string, rule *events.DescribeRuleOu
 
 		conn := acctest.Provider.Meta().(*conns.AWSClient).CloudWatchEventsConn
 
-		resp, err := finder.RuleByResourceID(conn, rs.Primary.ID)
+		resp, err := finder.FindRuleByResourceID(conn, rs.Primary.ID)
 
 		if err != nil {
 			return err
@@ -607,7 +607,7 @@ func testAccCheckCloudWatchEventRuleEnabled(n string, desired string) resource.T
 
 		conn := acctest.Provider.Meta().(*conns.AWSClient).CloudWatchEventsConn
 
-		resp, err := finder.RuleByResourceID(conn, rs.Primary.ID)
+		resp, err := finder.FindRuleByResourceID(conn, rs.Primary.ID)
 
 		if err != nil {
 			return err
@@ -629,7 +629,7 @@ func testAccCheckAWSCloudWatchEventRuleDestroy(s *terraform.State) error {
 			continue
 		}
 
-		_, err := finder.RuleByResourceID(conn, rs.Primary.ID)
+		_, err := finder.FindRuleByResourceID(conn, rs.Primary.ID)
 
 		if tfresource.NotFound(err) {
 			continue

@@ -630,7 +630,7 @@ func testAccCheckAWSCloudWatchEventConnectionDestroy(s *terraform.State) error {
 			continue
 		}
 
-		_, err := finder.ConnectionByName(conn, rs.Primary.ID)
+		_, err := finder.FindConnectionByName(conn, rs.Primary.ID)
 
 		if tfresource.NotFound(err) {
 			continue
@@ -655,7 +655,7 @@ func testAccCheckCloudWatchEventConnectionExists(n string, v *events.DescribeCon
 
 		conn := acctest.Provider.Meta().(*conns.AWSClient).CloudWatchEventsConn
 
-		output, err := finder.ConnectionByName(conn, rs.Primary.ID)
+		output, err := finder.FindConnectionByName(conn, rs.Primary.ID)
 
 		if err != nil {
 			return err
