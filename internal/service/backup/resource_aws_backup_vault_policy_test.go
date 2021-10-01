@@ -160,7 +160,7 @@ func testAccCheckAwsBackupVaultPolicyDestroy(s *terraform.State) error {
 			continue
 		}
 
-		_, err := finder.BackupVaultAccessPolicyByName(conn, rs.Primary.ID)
+		_, err := finder.FindBackupVaultAccessPolicyByName(conn, rs.Primary.ID)
 
 		if tfresource.NotFound(err) {
 			continue
@@ -189,7 +189,7 @@ func testAccCheckAwsBackupVaultPolicyExists(name string, vault *backup.GetBackup
 
 		conn := acctest.Provider.Meta().(*conns.AWSClient).BackupConn
 
-		output, err := finder.BackupVaultAccessPolicyByName(conn, rs.Primary.ID)
+		output, err := finder.FindBackupVaultAccessPolicyByName(conn, rs.Primary.ID)
 
 		if err != nil {
 			return err
