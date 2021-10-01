@@ -11,6 +11,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/resource"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/terraform"
 	"github.com/hashicorp/terraform-provider-aws/internal/acctest"
+	"github.com/hashicorp/terraform-provider-aws/internal/conns"
 )
 
 func TestAccAWSSESReceiptRule_basic(t *testing.T) {
@@ -47,7 +48,7 @@ func TestAccAWSSESReceiptRule_basic(t *testing.T) {
 					resource.TestCheckTypeSetElemAttr(resourceName, "recipients.*", acctest.DefaultEmailAddress),
 					resource.TestCheckResourceAttr(resourceName, "enabled", "true"),
 					resource.TestCheckResourceAttr(resourceName, "scan_enabled", "true"),
-					resource.TestCheckResourceAttr(resourceName, "tls_policy", "Require"),
+					resource.TestCheckResourceAttr(resourceName, "tls_policy", "RequireEnvVar"),
 				),
 			},
 			{
@@ -356,7 +357,7 @@ func TestAccAWSSESReceiptRule_disappears(t *testing.T) {
 }
 
 func testAccCheckSESReceiptRuleDestroy(s *terraform.State) error {
-	conn := acctest.Provider.Meta().(*AWSClient).sesconn
+	conn := acctest.Provider.Meta().(*conns.AWSClient).SESConn
 
 	for _, rs := range s.RootModule().Resources {
 		if rs.Type != "aws_ses_receipt_rule" {
@@ -396,7 +397,7 @@ func testAccCheckAwsSESReceiptRuleExists(n string, rule *ses.ReceiptRule) resour
 			return fmt.Errorf("SES Receipt Rule name not set")
 		}
 
-		conn := acctest.Provider.Meta().(*AWSClient).sesconn
+		conn := acctest.Provider.Meta().(*conns.AWSClient).SESConn
 
 		params := &ses.DescribeReceiptRuleInput{
 			RuleName:    aws.String(rs.Primary.Attributes["name"]),
@@ -426,7 +427,7 @@ func testAccAwsSesReceiptRuleImportStateIdFunc(resourceName string) resource.Imp
 }
 
 func testAccPreCheckSESReceiptRule(t *testing.T) {
-	conn := acctest.Provider.Meta().(*AWSClient).sesconn
+	conn := acctest.Provider.Meta().(*conns.AWSClient).SESConn
 
 	input := &ses.DescribeReceiptRuleInput{
 		RuleName:    aws.String("MyRule"),
@@ -460,7 +461,7 @@ resource "aws_ses_receipt_rule" "test" {
   recipients    = [%[2]q]
   enabled       = true
   scan_enabled  = true
-  tls_policy    = "Require"
+  tls_policy    = "RequireEnvVar"
 }
 `, rName, email)
 }
@@ -483,7 +484,7 @@ resource "aws_ses_receipt_rule" "test" {
   recipients    = [%[2]q]
   enabled       = true
   scan_enabled  = true
-  tls_policy    = "Require"
+  tls_policy    = "RequireEnvVar"
 
   s3_action {
     bucket_name = aws_s3_bucket.test.id
@@ -509,7 +510,7 @@ resource "aws_ses_receipt_rule" "test" {
   recipients    = [%[2]q]
   enabled       = true
   scan_enabled  = true
-  tls_policy    = "Require"
+  tls_policy    = "RequireEnvVar"
 
   sns_action {
     topic_arn = aws_sns_topic.test.arn
@@ -535,7 +536,7 @@ resource "aws_ses_receipt_rule" "test" {
   recipients    = [%[2]q]
   enabled       = true
   scan_enabled  = true
-  tls_policy    = "Require"
+  tls_policy    = "RequireEnvVar"
 
   sns_action {
     topic_arn = aws_sns_topic.test.arn
@@ -591,7 +592,7 @@ resource "aws_ses_receipt_rule" "test" {
   recipients    = [%[2]q]
   enabled       = true
   scan_enabled  = true
-  tls_policy    = "Require"
+  tls_policy    = "RequireEnvVar"
 
   lambda_action {
     function_arn = aws_lambda_function.test.arn
@@ -619,7 +620,7 @@ resource "aws_ses_receipt_rule" "test" {
   recipients    = [%[2]q]
   enabled       = true
   scan_enabled  = true
-  tls_policy    = "Require"
+  tls_policy    = "RequireEnvVar"
 
   stop_action {
     topic_arn = aws_sns_topic.test.arn
