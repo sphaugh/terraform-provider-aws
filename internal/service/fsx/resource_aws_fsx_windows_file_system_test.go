@@ -851,7 +851,7 @@ func testAccCheckFsxWindowsFileSystemExists(resourceName string, fs *fsx.FileSys
 
 		conn := acctest.Provider.Meta().(*conns.AWSClient).FSxConn
 
-		filesystem, err := finder.FileSystemByID(conn, rs.Primary.ID)
+		filesystem, err := finder.FindFileSystemByID(conn, rs.Primary.ID)
 		if err != nil {
 			return err
 		}
@@ -874,7 +874,7 @@ func testAccCheckFsxWindowsFileSystemDestroy(s *terraform.State) error {
 			continue
 		}
 
-		filesystem, err := finder.FileSystemByID(conn, rs.Primary.ID)
+		filesystem, err := finder.FindFileSystemByID(conn, rs.Primary.ID)
 		if tfresource.NotFound(err) {
 			continue
 		}
