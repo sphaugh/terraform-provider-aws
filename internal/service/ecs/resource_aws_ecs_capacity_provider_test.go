@@ -281,7 +281,7 @@ func testAccCheckAWSEcsCapacityProviderDestroy(s *terraform.State) error {
 			continue
 		}
 
-		_, err := finder.CapacityProviderByARN(conn, rs.Primary.ID)
+		_, err := finder.FindCapacityProviderByARN(conn, rs.Primary.ID)
 
 		if tfresource.NotFound(err) {
 			continue
@@ -310,7 +310,7 @@ func testAccCheckAWSEcsCapacityProviderExists(resourceName string, provider *ecs
 
 		conn := acctest.Provider.Meta().(*conns.AWSClient).ECSConn
 
-		output, err := finder.CapacityProviderByARN(conn, rs.Primary.ID)
+		output, err := finder.FindCapacityProviderByARN(conn, rs.Primary.ID)
 
 		if err != nil {
 			return err

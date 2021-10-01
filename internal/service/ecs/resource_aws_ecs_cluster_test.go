@@ -398,7 +398,7 @@ func testAccCheckAWSEcsClusterDestroy(s *terraform.State) error {
 			continue
 		}
 
-		out, err := finder.ClusterByARN(conn, rs.Primary.ID)
+		out, err := finder.FindClusterByARN(conn, rs.Primary.ID)
 
 		if err != nil {
 			return err
@@ -422,7 +422,7 @@ func testAccCheckAWSEcsClusterExists(resourceName string, cluster *ecs.Cluster) 
 		}
 
 		conn := acctest.Provider.Meta().(*conns.AWSClient).ECSConn
-		output, err := finder.ClusterByARN(conn, rs.Primary.ID)
+		output, err := finder.FindClusterByARN(conn, rs.Primary.ID)
 
 		if err != nil {
 			return fmt.Errorf("error reading ECS Cluster (%s): %w", rs.Primary.ID, err)
