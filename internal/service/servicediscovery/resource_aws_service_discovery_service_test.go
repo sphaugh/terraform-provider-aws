@@ -289,7 +289,7 @@ func testAccCheckAwsServiceDiscoveryServiceDestroy(s *terraform.State) error {
 			continue
 		}
 
-		_, err := finder.ServiceByID(conn, rs.Primary.ID)
+		_, err := finder.FindServiceByID(conn, rs.Primary.ID)
 
 		if tfresource.NotFound(err) {
 			continue
@@ -318,7 +318,7 @@ func testAccCheckAwsServiceDiscoveryServiceExists(name string) resource.TestChec
 
 		conn := acctest.Provider.Meta().(*conns.AWSClient).ServiceDiscoveryConn
 
-		_, err := finder.ServiceByID(conn, rs.Primary.ID)
+		_, err := finder.FindServiceByID(conn, rs.Primary.ID)
 
 		if err != nil {
 			return err
