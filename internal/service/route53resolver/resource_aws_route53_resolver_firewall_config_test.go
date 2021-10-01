@@ -132,7 +132,7 @@ func testAccCheckRoute53ResolverFirewallConfigDestroy(s *terraform.State) error 
 			continue
 		}
 
-		config, err := finder.FirewallConfigByID(conn, rs.Primary.ID)
+		config, err := finder.FindFirewallConfigByID(conn, rs.Primary.ID)
 
 		if tfresource.NotFound(err) {
 			continue
@@ -165,7 +165,7 @@ func testAccCheckRoute53ResolverFirewallConfigExists(n string, v *route53resolve
 
 		conn := acctest.Provider.Meta().(*conns.AWSClient).Route53ResolverConn
 
-		out, err := finder.FirewallConfigByID(conn, rs.Primary.ID)
+		out, err := finder.FindFirewallConfigByID(conn, rs.Primary.ID)
 
 		if err != nil {
 			return err

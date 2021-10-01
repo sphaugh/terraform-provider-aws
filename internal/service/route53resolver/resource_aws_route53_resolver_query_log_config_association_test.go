@@ -131,7 +131,7 @@ func testAccCheckRoute53ResolverQueryLogConfigAssociationDestroy(s *terraform.St
 		}
 
 		// Try to find the resource
-		_, err := finder.ResolverQueryLogConfigAssociationByID(conn, rs.Primary.ID)
+		_, err := finder.FindResolverQueryLogConfigAssociationByID(conn, rs.Primary.ID)
 		// Verify the error is what we want
 		if tfawserr.ErrMessageContains(err, route53resolver.ErrCodeResourceNotFoundException, "") {
 			continue
@@ -157,7 +157,7 @@ func testAccCheckRoute53ResolverQueryLogConfigAssociationExists(n string, v *rou
 		}
 
 		conn := acctest.Provider.Meta().(*conns.AWSClient).Route53ResolverConn
-		out, err := finder.ResolverQueryLogConfigAssociationByID(conn, rs.Primary.ID)
+		out, err := finder.FindResolverQueryLogConfigAssociationByID(conn, rs.Primary.ID)
 		if err != nil {
 			return err
 		}
