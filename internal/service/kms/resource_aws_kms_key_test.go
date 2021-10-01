@@ -444,7 +444,7 @@ func testAccCheckAWSKmsKeyDestroy(s *terraform.State) error {
 			continue
 		}
 
-		_, err := finder.KeyByID(conn, rs.Primary.ID)
+		_, err := finder.FindKeyByID(conn, rs.Primary.ID)
 
 		if tfresource.NotFound(err) {
 			continue
@@ -474,7 +474,7 @@ func testAccCheckAWSKmsKeyExists(name string, key *kms.KeyMetadata) resource.Tes
 		conn := acctest.Provider.Meta().(*conns.AWSClient).KMSConn
 
 		outputRaw, err := tfresource.RetryWhenNotFound(waiter.PropagationTimeout, func() (interface{}, error) {
-			return finder.KeyByID(conn, rs.Primary.ID)
+			return finder.FindKeyByID(conn, rs.Primary.ID)
 		})
 
 		if err != nil {
