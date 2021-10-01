@@ -173,7 +173,7 @@ func testAccCheckAWSSagemakerHumanTaskUiDestroy(s *terraform.State) error {
 			continue
 		}
 
-		_, err := finder.HumanTaskUiByName(conn, rs.Primary.ID)
+		_, err := finder.FindHumanTaskUIByName(conn, rs.Primary.ID)
 
 		if tfresource.NotFound(err) {
 			continue
@@ -202,7 +202,7 @@ func testAccCheckAWSSagemakerHumanTaskUiExists(n string, humanTaskUi *sagemaker.
 
 		conn := acctest.Provider.Meta().(*conns.AWSClient).SageMakerConn
 
-		output, err := finder.HumanTaskUiByName(conn, rs.Primary.ID)
+		output, err := finder.FindHumanTaskUIByName(conn, rs.Primary.ID)
 
 		if err != nil {
 			return err
