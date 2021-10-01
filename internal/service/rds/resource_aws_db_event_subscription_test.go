@@ -342,7 +342,7 @@ func testAccCheckAWSDBEventSubscriptionExists(n string, v *rds.EventSubscription
 
 		conn := acctest.Provider.Meta().(*conns.AWSClient).RDSConn
 
-		output, err := finder.EventSubscriptionByID(conn, rs.Primary.ID)
+		output, err := finder.FindEventSubscriptionByID(conn, rs.Primary.ID)
 
 		if err != nil {
 			return err
@@ -362,7 +362,7 @@ func testAccCheckAWSDBEventSubscriptionDestroy(s *terraform.State) error {
 			continue
 		}
 
-		_, err := finder.EventSubscriptionByID(conn, rs.Primary.ID)
+		_, err := finder.FindEventSubscriptionByID(conn, rs.Primary.ID)
 
 		if tfresource.NotFound(err) {
 			continue

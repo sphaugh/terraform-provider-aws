@@ -93,7 +93,7 @@ func dataSourceProxyRead(d *schema.ResourceData, meta interface{}) error {
 	conn := meta.(*conns.AWSClient).RDSConn
 
 	name := d.Get("name").(string)
-	dbProxy, err := finder.DBProxyByName(conn, name)
+	dbProxy, err := finder.FindDBProxyByName(conn, name)
 
 	if err != nil {
 		return fmt.Errorf("error reading RDS DB Proxy (%s): %w", name, err)

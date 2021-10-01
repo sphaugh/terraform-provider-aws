@@ -10,8 +10,8 @@ import (
 	"github.com/hashicorp/terraform-provider-aws/internal/verify"
 )
 
-// DBProxyTarget returns matching DBProxyTarget.
-func DBProxyTarget(conn *rds.RDS, dbProxyName, targetGroupName, targetType, rdsResourceId string) (*rds.DBProxyTarget, error) {
+// FindDBProxyTarget returns matching FindDBProxyTarget.
+func FindDBProxyTarget(conn *rds.RDS, dbProxyName, targetGroupName, targetType, rdsResourceId string) (*rds.DBProxyTarget, error) {
 	input := &rds.DescribeDBProxyTargetsInput{
 		DBProxyName:     aws.String(dbProxyName),
 		TargetGroupName: aws.String(targetGroupName),
@@ -36,9 +36,9 @@ func DBProxyTarget(conn *rds.RDS, dbProxyName, targetGroupName, targetType, rdsR
 	return dbProxyTarget, err
 }
 
-// DBProxyEndpoint returns matching DBProxyEndpoint.
-func DBProxyEndpoint(conn *rds.RDS, id string) (*rds.DBProxyEndpoint, error) {
-	dbProxyName, dbProxyEndpointName, err := tfrds.ResourceAwsDbProxyEndpointParseID(id)
+// FindDBProxyEndpoint returns matching FindDBProxyEndpoint.
+func FindDBProxyEndpoint(conn *rds.RDS, id string) (*rds.DBProxyEndpoint, error) {
+	dbProxyName, dbProxyEndpointName, err := tfrds.ResourceAwsDBProxyEndpointParseID(id)
 	if err != nil {
 		return nil, err
 	}
@@ -68,8 +68,8 @@ func DBProxyEndpoint(conn *rds.RDS, id string) (*rds.DBProxyEndpoint, error) {
 	return dbProxyEndpoint, err
 }
 
-func DBClusterRoleByDBClusterIDAndRoleARN(conn *rds.RDS, dbClusterID, roleARN string) (*rds.DBClusterRole, error) {
-	dbCluster, err := DBClusterByID(conn, dbClusterID)
+func FindDBClusterRoleByDBClusterIDAndRoleARN(conn *rds.RDS, dbClusterID, roleARN string) (*rds.DBClusterRole, error) {
+	dbCluster, err := FindDBClusterByID(conn, dbClusterID)
 
 	if err != nil {
 		return nil, err
@@ -90,7 +90,7 @@ func DBClusterRoleByDBClusterIDAndRoleARN(conn *rds.RDS, dbClusterID, roleARN st
 	return nil, &resource.NotFoundError{}
 }
 
-func DBClusterByID(conn *rds.RDS, id string) (*rds.DBCluster, error) {
+func FindDBClusterByID(conn *rds.RDS, id string) (*rds.DBCluster, error) {
 	input := &rds.DescribeDBClustersInput{
 		DBClusterIdentifier: aws.String(id),
 	}
@@ -120,7 +120,7 @@ func DBClusterByID(conn *rds.RDS, id string) (*rds.DBCluster, error) {
 	return dbCluster, nil
 }
 
-func DBProxyByName(conn *rds.RDS, name string) (*rds.DBProxy, error) {
+func FindDBProxyByName(conn *rds.RDS, name string) (*rds.DBProxy, error) {
 	input := &rds.DescribeDBProxiesInput{
 		DBProxyName: aws.String(name),
 	}
@@ -141,7 +141,7 @@ func DBProxyByName(conn *rds.RDS, name string) (*rds.DBProxy, error) {
 	return output.DBProxies[0], nil
 }
 
-func EventSubscriptionByID(conn *rds.RDS, id string) (*rds.EventSubscription, error) {
+func FindEventSubscriptionByID(conn *rds.RDS, id string) (*rds.EventSubscription, error) {
 	input := &rds.DescribeEventSubscriptionsInput{
 		SubscriptionName: aws.String(id),
 	}
