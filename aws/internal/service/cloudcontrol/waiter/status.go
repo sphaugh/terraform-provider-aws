@@ -11,9 +11,9 @@ import (
 	"github.com/hashicorp/terraform-provider-aws/internal/verify"
 )
 
-func ProgressEventOperationStatus(ctx context.Context, conn *cloudcontrolapi.CloudControlApi, requestToken string) resource.StateRefreshFunc {
+func statusProgressEventOperation(ctx context.Context, conn *cloudcontrolapi.CloudControlApi, requestToken string) resource.StateRefreshFunc {
 	return func() (interface{}, string, error) {
-		output, err := finder.ProgressEventByRequestToken(ctx, conn, requestToken)
+		output, err := finder.FindProgressEventByRequestToken(ctx, conn, requestToken)
 
 		if tfresource.NotFound(err) {
 			return nil, "", nil
