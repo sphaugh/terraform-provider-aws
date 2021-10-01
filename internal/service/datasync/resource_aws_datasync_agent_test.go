@@ -267,7 +267,7 @@ func testAccCheckAWSDataSyncAgentDestroy(s *terraform.State) error {
 			continue
 		}
 
-		_, err := finder.AgentByARN(conn, rs.Primary.ID)
+		_, err := finder.FindAgentByARN(conn, rs.Primary.ID)
 
 		if tfresource.NotFound(err) {
 			continue
@@ -292,7 +292,7 @@ func testAccCheckAWSDataSyncAgentExists(resourceName string, agent *datasync.Des
 
 		conn := acctest.Provider.Meta().(*conns.AWSClient).DataSyncConn
 
-		output, err := finder.AgentByARN(conn, rs.Primary.ID)
+		output, err := finder.FindAgentByARN(conn, rs.Primary.ID)
 
 		if err != nil {
 			return err
