@@ -396,7 +396,7 @@ func testAccCheckGlobalAcceleratorAcceleratorExists(name string) resource.TestCh
 			return fmt.Errorf("No ID is set")
 		}
 
-		_, err := finder.AcceleratorByARN(conn, rs.Primary.ID)
+		_, err := finder.FindAcceleratorByARN(conn, rs.Primary.ID)
 
 		if err != nil {
 			return err
@@ -414,7 +414,7 @@ func testAccCheckGlobalAcceleratorAcceleratorDestroy(s *terraform.State) error {
 			continue
 		}
 
-		_, err := finder.AcceleratorByARN(conn, rs.Primary.ID)
+		_, err := finder.FindAcceleratorByARN(conn, rs.Primary.ID)
 
 		if tfresource.NotFound(err) {
 			continue
