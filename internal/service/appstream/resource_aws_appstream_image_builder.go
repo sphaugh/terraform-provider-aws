@@ -230,7 +230,7 @@ func resourceImageBuilderCreate(ctx context.Context, d *schema.ResourceData, met
 
 	d.SetId(aws.StringValue(output.ImageBuilder.Name))
 
-	if _, err = waiter.ImageBuilderStateRunning(ctx, conn, d.Id()); err != nil {
+	if _, err = waiter.waitImageBuilderStateRunning(ctx, conn, d.Id()); err != nil {
 		return diag.FromErr(fmt.Errorf("error waiting for Appstream ImageBuilder (%s) to be running: %w", d.Id(), err))
 	}
 
@@ -243,7 +243,7 @@ func resourceImageBuilderRead(ctx context.Context, d *schema.ResourceData, meta 
 	defaultTagsConfig := meta.(*conns.AWSClient).DefaultTagsConfig
 	ignoreTagsConfig := meta.(*conns.AWSClient).IgnoreTagsConfig
 
-	imageBuilder, err := finder.ImageBuilderByName(ctx, conn, d.Id())
+	imageBuilder, err := finder.FindImageBuilderByName(ctx, conn, d.Id())
 
 	if !d.IsNewResource() && tfawserr.ErrCodeEquals(err, appstream.ErrCodeResourceNotFoundException) {
 		log.Printf("[WARN] Appstream ImageBuilder (%s) not found, removing from state", d.Id())
@@ -333,7 +333,7 @@ func resourceImageBuilderDelete(ctx context.Context, d *schema.ResourceData, met
 		return diag.FromErr(fmt.Errorf("error deleting Appstream ImageBuilder (%s): %w", d.Id(), err))
 	}
 
-	if _, err = waiter.ImageBuilderStateDeleted(ctx, conn, d.Id()); err != nil {
+	if _, err = waiter.waitImageBuilderStateDeleted(ctx, conn, d.Id()); err != nil {
 		if tfawserr.ErrCodeEquals(err, appstream.ErrCodeResourceNotFoundException) {
 			return nil
 		}

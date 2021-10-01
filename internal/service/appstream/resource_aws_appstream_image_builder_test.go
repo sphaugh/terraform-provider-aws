@@ -244,7 +244,7 @@ func testAccCheckAwsAppStreamImageBuilderExists(resourceName string) resource.Te
 
 		conn := acctest.Provider.Meta().(*conns.AWSClient).AppStreamConn
 
-		imageBuilder, err := finder.ImageBuilderByName(context.Background(), conn, rs.Primary.ID)
+		imageBuilder, err := finder.FindImageBuilderByName(context.Background(), conn, rs.Primary.ID)
 
 		if err != nil {
 			return err
@@ -266,7 +266,7 @@ func testAccCheckAwsAppStreamImageBuilderDestroy(s *terraform.State) error {
 			continue
 		}
 
-		imageBuilder, err := finder.ImageBuilderByName(context.Background(), conn, rs.Primary.ID)
+		imageBuilder, err := finder.FindImageBuilderByName(context.Background(), conn, rs.Primary.ID)
 
 		if tfawserr.ErrCodeEquals(err, appstream.ErrCodeResourceNotFoundException) {
 			continue
