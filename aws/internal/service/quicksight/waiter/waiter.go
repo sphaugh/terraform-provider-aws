@@ -13,17 +13,17 @@ import (
 )
 
 const (
-	DataSourceCreateTimeout = 5 * time.Minute
-	DataSourceUpdateTimeout = 5 * time.Minute
+	dataSourceCreateTimeout = 5 * time.Minute
+	dataSourceUpdateTimeout = 5 * time.Minute
 )
 
-// DataSourceCreated waits for a DataSource to return CREATION_SUCCESSFUL
-func DataSourceCreated(ctx context.Context, conn *quicksight.QuickSight, accountId, dataSourceId string) (*quicksight.DataSource, error) {
+// waitDataSourceCreated waits for a DataSource to return CREATION_SUCCESSFUL
+func waitDataSourceCreated(ctx context.Context, conn *quicksight.QuickSight, accountId, dataSourceId string) (*quicksight.DataSource, error) {
 	stateConf := &resource.StateChangeConf{
 		Pending: []string{quicksight.ResourceStatusCreationInProgress},
 		Target:  []string{quicksight.ResourceStatusCreationSuccessful},
-		Refresh: DataSourceStatus(ctx, conn, accountId, dataSourceId),
-		Timeout: DataSourceCreateTimeout,
+		Refresh: statusDataSource(ctx, conn, accountId, dataSourceId),
+		Timeout: dataSourceCreateTimeout,
 	}
 
 	outputRaw, err := stateConf.WaitForState()
@@ -39,13 +39,13 @@ func DataSourceCreated(ctx context.Context, conn *quicksight.QuickSight, account
 	return nil, err
 }
 
-// DataSourceUpdated waits for a DataSource to return UPDATE_SUCCESSFUL
-func DataSourceUpdated(ctx context.Context, conn *quicksight.QuickSight, accountId, dataSourceId string) (*quicksight.DataSource, error) {
+// waitDataSourceUpdated waits for a DataSource to return UPDATE_SUCCESSFUL
+func waitDataSourceUpdated(ctx context.Context, conn *quicksight.QuickSight, accountId, dataSourceId string) (*quicksight.DataSource, error) {
 	stateConf := &resource.StateChangeConf{
 		Pending: []string{quicksight.ResourceStatusUpdateInProgress},
 		Target:  []string{quicksight.ResourceStatusUpdateSuccessful},
-		Refresh: DataSourceStatus(ctx, conn, accountId, dataSourceId),
-		Timeout: DataSourceUpdateTimeout,
+		Refresh: statusDataSource(ctx, conn, accountId, dataSourceId),
+		Timeout: dataSourceUpdateTimeout,
 	}
 
 	outputRaw, err := stateConf.WaitForState()
