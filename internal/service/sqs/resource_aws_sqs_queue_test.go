@@ -105,7 +105,7 @@ func TestAccAWSSQSQueue_basic(t *testing.T) {
 					resource.TestCheckResourceAttr(resourceName, "delay_seconds", strconv.Itoa(tfsqs.DefaultQueueDelaySeconds)),
 					resource.TestCheckResourceAttr(resourceName, "fifo_queue", "false"),
 					resource.TestCheckResourceAttr(resourceName, "fifo_throughput_limit", ""),
-					resource.TestCheckResourceAttr(resourceName, "kms_data_key_reuse_period_seconds", strconv.Itoa(tfsqs.DefaultQueueKmsDataKeyReusePeriodSeconds)),
+					resource.TestCheckResourceAttr(resourceName, "kms_data_key_reuse_period_seconds", strconv.Itoa(tfsqs.DefaultQueueKMSDataKeyReusePeriodSeconds)),
 					resource.TestCheckResourceAttr(resourceName, "kms_master_key_id", ""),
 					resource.TestCheckResourceAttr(resourceName, "max_message_size", strconv.Itoa(tfsqs.DefaultQueueMaximumMessageSize)),
 					resource.TestCheckResourceAttr(resourceName, "message_retention_seconds", strconv.Itoa(tfsqs.DefaultQueueMessageRetentionPeriod)),
@@ -193,7 +193,7 @@ func TestAccAWSSQSQueue_Name_Generated_FIFOQueue(t *testing.T) {
 				Config: testAccAWSSQSQueueConfigNameGeneratedFIFOQueue,
 				Check: resource.ComposeTestCheckFunc(
 					testAccCheckAWSSQSQueueExists(resourceName, &queueAttributes),
-					create.TestCheckResourceAttrNameWithSuffixGenerated(resourceName, "name", tfsqs.FifoQueueNameSuffix),
+					create.TestCheckResourceAttrNameWithSuffixGenerated(resourceName, "name", tfsqs.FIFOQueueNameSuffix),
 					resource.TestCheckResourceAttr(resourceName, "name_prefix", "terraform-"),
 					resource.TestCheckResourceAttr(resourceName, "fifo_queue", "true"),
 				),
@@ -249,7 +249,7 @@ func TestAccAWSSQSQueue_NamePrefix_FIFOQueue(t *testing.T) {
 				Config: testAccAWSSQSQueueConfigNamePrefixFIFOQueue("tf-acc-test-prefix-"),
 				Check: resource.ComposeTestCheckFunc(
 					testAccCheckAWSSQSQueueExists(resourceName, &queueAttributes),
-					create.TestCheckResourceAttrNameWithSuffixFromPrefix(resourceName, "name", "tf-acc-test-prefix-", tfsqs.FifoQueueNameSuffix),
+					create.TestCheckResourceAttrNameWithSuffixFromPrefix(resourceName, "name", "tf-acc-test-prefix-", tfsqs.FIFOQueueNameSuffix),
 					resource.TestCheckResourceAttr(resourceName, "name_prefix", "tf-acc-test-prefix-"),
 					resource.TestCheckResourceAttr(resourceName, "fifo_queue", "true"),
 				),
@@ -329,7 +329,7 @@ func TestAccAWSSQSQueue_Update(t *testing.T) {
 					resource.TestCheckResourceAttr(resourceName, "delay_seconds", strconv.Itoa(tfsqs.DefaultQueueDelaySeconds)),
 					resource.TestCheckResourceAttr(resourceName, "fifo_queue", "false"),
 					resource.TestCheckResourceAttr(resourceName, "fifo_throughput_limit", ""),
-					resource.TestCheckResourceAttr(resourceName, "kms_data_key_reuse_period_seconds", strconv.Itoa(tfsqs.DefaultQueueKmsDataKeyReusePeriodSeconds)),
+					resource.TestCheckResourceAttr(resourceName, "kms_data_key_reuse_period_seconds", strconv.Itoa(tfsqs.DefaultQueueKMSDataKeyReusePeriodSeconds)),
 					resource.TestCheckResourceAttr(resourceName, "kms_master_key_id", ""),
 					resource.TestCheckResourceAttr(resourceName, "max_message_size", strconv.Itoa(tfsqs.DefaultQueueMaximumMessageSize)),
 					resource.TestCheckResourceAttr(resourceName, "message_retention_seconds", strconv.Itoa(tfsqs.DefaultQueueMessageRetentionPeriod)),
@@ -352,7 +352,7 @@ func TestAccAWSSQSQueue_Update(t *testing.T) {
 					resource.TestCheckResourceAttr(resourceName, "delay_seconds", "90"),
 					resource.TestCheckResourceAttr(resourceName, "fifo_queue", "false"),
 					resource.TestCheckResourceAttr(resourceName, "fifo_throughput_limit", ""),
-					resource.TestCheckResourceAttr(resourceName, "kms_data_key_reuse_period_seconds", strconv.Itoa(tfsqs.DefaultQueueKmsDataKeyReusePeriodSeconds)),
+					resource.TestCheckResourceAttr(resourceName, "kms_data_key_reuse_period_seconds", strconv.Itoa(tfsqs.DefaultQueueKMSDataKeyReusePeriodSeconds)),
 					resource.TestCheckResourceAttr(resourceName, "kms_master_key_id", ""),
 					resource.TestCheckResourceAttr(resourceName, "max_message_size", "2048"),
 					resource.TestCheckResourceAttr(resourceName, "message_retention_seconds", "86400"),
@@ -672,7 +672,7 @@ func TestAccAWSSQSQueue_DefaultKmsDataKeyReusePeriodSeconds(t *testing.T) {
 				Config: testAccAWSSQSConfigDefaultKmsDataKeyReusePeriodSeconds(rName),
 				Check: resource.ComposeTestCheckFunc(
 					testAccCheckAWSSQSQueueExists(resourceName, &queueAttributes),
-					resource.TestCheckResourceAttr(resourceName, "kms_data_key_reuse_period_seconds", strconv.Itoa(tfsqs.DefaultQueueKmsDataKeyReusePeriodSeconds)),
+					resource.TestCheckResourceAttr(resourceName, "kms_data_key_reuse_period_seconds", strconv.Itoa(tfsqs.DefaultQueueKMSDataKeyReusePeriodSeconds)),
 				),
 			},
 			{
@@ -736,7 +736,7 @@ func testAccCheckAWSSQSQueueExists(resourceName string, v *map[string]string) re
 
 		conn := acctest.Provider.Meta().(*conns.AWSClient).SQSConn
 
-		output, err := finder.QueueAttributesByURL(conn, rs.Primary.ID)
+		output, err := finder.FindQueueAttributesByURL(conn, rs.Primary.ID)
 
 		if err != nil {
 			return err
@@ -756,7 +756,7 @@ func testAccCheckAWSSQSQueueDestroy(s *terraform.State) error {
 			continue
 		}
 
-		_, err := finder.QueueAttributesByURL(conn, rs.Primary.ID)
+		_, err := finder.FindQueueAttributesByURL(conn, rs.Primary.ID)
 
 		if tfresource.NotFound(err) {
 			continue
