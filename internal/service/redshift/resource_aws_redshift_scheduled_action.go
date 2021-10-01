@@ -182,7 +182,7 @@ func resourceScheduledActionCreate(d *schema.ResourceData, meta interface{}) err
 			return conn.CreateScheduledAction(input)
 		},
 		func(err error) (bool, error) {
-			if tfawserr.ErrMessageContains(err, tfredshift.ErrCodeInvalidParameterValue, "The IAM role must delegate access to Amazon Redshift scheduler") {
+			if tfawserr.ErrMessageContains(err, tfredshift.errCodeInvalidParameterValue, "The IAM role must delegate access to Amazon Redshift scheduler") {
 				return true, err
 			}
 
@@ -202,7 +202,7 @@ func resourceScheduledActionCreate(d *schema.ResourceData, meta interface{}) err
 func resourceScheduledActionRead(d *schema.ResourceData, meta interface{}) error {
 	conn := meta.(*conns.AWSClient).RedshiftConn
 
-	scheduledAction, err := finder.ScheduledActionByName(conn, d.Id())
+	scheduledAction, err := finder.FindScheduledActionByName(conn, d.Id())
 
 	if !d.IsNewResource() && tfresource.NotFound(err) {
 		log.Printf("[WARN] Redshift Scheduled Action (%s) not found, removing from state", d.Id())
