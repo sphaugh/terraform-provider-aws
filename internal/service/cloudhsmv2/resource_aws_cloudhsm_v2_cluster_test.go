@@ -244,7 +244,7 @@ func testAccCheckAWSCloudHsmV2ClusterDestroy(s *terraform.State) error {
 		if rs.Type != "aws_cloudhsm_v2_cluster" {
 			continue
 		}
-		cluster, err := finder.Cluster(conn, rs.Primary.ID)
+		cluster, err := finder.FindCluster(conn, rs.Primary.ID)
 
 		if err != nil {
 			return err
@@ -266,7 +266,7 @@ func testAccCheckAWSCloudHsmV2ClusterExists(name string) resource.TestCheckFunc 
 			return fmt.Errorf("Not found: %s", name)
 		}
 
-		_, err := finder.Cluster(conn, it.Primary.ID)
+		_, err := finder.FindCluster(conn, it.Primary.ID)
 
 		if err != nil {
 			return fmt.Errorf("CloudHSM cluster not found: %s", err)
