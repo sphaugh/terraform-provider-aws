@@ -646,7 +646,7 @@ func testAccCheckAWSAmplifyAppExists(n string, v *amplify.App) resource.TestChec
 
 		conn := acctest.Provider.Meta().(*conns.AWSClient).AmplifyConn
 
-		output, err := finder.AppByID(conn, rs.Primary.ID)
+		output, err := finder.FindAppByID(conn, rs.Primary.ID)
 
 		if err != nil {
 			return err
@@ -666,7 +666,7 @@ func testAccCheckAWSAmplifyAppDestroy(s *terraform.State) error {
 			continue
 		}
 
-		_, err := finder.AppByID(conn, rs.Primary.ID)
+		_, err := finder.FindAppByID(conn, rs.Primary.ID)
 
 		if tfresource.NotFound(err) {
 			continue
