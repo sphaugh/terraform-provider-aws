@@ -31,7 +31,7 @@ func dataSourceDeliveryStreamRead(d *schema.ResourceData, meta interface{}) erro
 	conn := meta.(*conns.AWSClient).FirehoseConn
 
 	sn := d.Get("name").(string)
-	output, err := finder.DeliveryStreamByName(conn, sn)
+	output, err := finder.FindDeliveryStreamByName(conn, sn)
 
 	if err != nil {
 		return fmt.Errorf("error reading Kinesis Firehose Delivery Stream (%s): %w", sn, err)

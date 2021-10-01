@@ -9,9 +9,9 @@ import (
 	"github.com/hashicorp/terraform-provider-aws/internal/verify"
 )
 
-func DeliveryStreamStatus(conn *firehose.Firehose, name string) resource.StateRefreshFunc {
+func statusDeliveryStream(conn *firehose.Firehose, name string) resource.StateRefreshFunc {
 	return func() (interface{}, string, error) {
-		output, err := finder.DeliveryStreamByName(conn, name)
+		output, err := finder.FindDeliveryStreamByName(conn, name)
 
 		if tfresource.NotFound(err) {
 			return nil, "", nil
@@ -25,9 +25,9 @@ func DeliveryStreamStatus(conn *firehose.Firehose, name string) resource.StateRe
 	}
 }
 
-func DeliveryStreamEncryptionConfigurationStatus(conn *firehose.Firehose, name string) resource.StateRefreshFunc {
+func statusDeliveryStreamEncryptionConfiguration(conn *firehose.Firehose, name string) resource.StateRefreshFunc {
 	return func() (interface{}, string, error) {
-		output, err := finder.DeliveryStreamEncryptionConfigurationByName(conn, name)
+		output, err := finder.FindDeliveryStreamEncryptionConfigurationByName(conn, name)
 
 		if tfresource.NotFound(err) {
 			return nil, "", nil

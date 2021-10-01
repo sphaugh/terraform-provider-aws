@@ -2561,7 +2561,7 @@ func resourceDeliveryStreamCreate(d *schema.ResourceData, meta interface{}) erro
 		return fmt.Errorf("error creating Kinesis Firehose Delivery Stream: %s", err)
 	}
 
-	s, err := waiter.DeliveryStreamCreated(conn, sn)
+	s, err := waiter.waitDeliveryStreamCreated(conn, sn)
 
 	if err != nil {
 		return fmt.Errorf("error waiting for Kinesis Firehose Delivery Stream (%s) create: %w", sn, err)
@@ -2582,7 +2582,7 @@ func resourceDeliveryStreamCreate(d *schema.ResourceData, meta interface{}) erro
 			return fmt.Errorf("error starting Kinesis Firehose Delivery Stream (%s) encryption: %w", sn, err)
 		}
 
-		if _, err := waiter.DeliveryStreamEncryptionEnabled(conn, sn); err != nil {
+		if _, err := waiter.waitDeliveryStreamEncryptionEnabled(conn, sn); err != nil {
 			return fmt.Errorf("error waiting for Kinesis Firehose Delivery Stream (%s) encryption enable: %w", sn, err)
 		}
 	}
@@ -2732,7 +2732,7 @@ func resourceDeliveryStreamUpdate(d *schema.ResourceData, meta interface{}) erro
 				return fmt.Errorf("error stopping Kinesis Firehose Delivery Stream (%s) encryption: %w", sn, err)
 			}
 
-			if _, err := waiter.DeliveryStreamEncryptionDisabled(conn, sn); err != nil {
+			if _, err := waiter.waitDeliveryStreamEncryptionDisabled(conn, sn); err != nil {
 				return fmt.Errorf("error waiting for Kinesis Firehose Delivery Stream (%s) encryption disable: %w", sn, err)
 			}
 		} else {
@@ -2748,7 +2748,7 @@ func resourceDeliveryStreamUpdate(d *schema.ResourceData, meta interface{}) erro
 					"error starting Kinesis Firehose Delivery Stream (%s) encryption: %w", sn, err)
 			}
 
-			if _, err := waiter.DeliveryStreamEncryptionEnabled(conn, sn); err != nil {
+			if _, err := waiter.waitDeliveryStreamEncryptionEnabled(conn, sn); err != nil {
 				return fmt.Errorf("error waiting for Kinesis Firehose Delivery Stream (%s) encryption enable: %w", sn, err)
 			}
 		}
@@ -2763,7 +2763,7 @@ func resourceDeliveryStreamRead(d *schema.ResourceData, meta interface{}) error 
 	ignoreTagsConfig := meta.(*conns.AWSClient).IgnoreTagsConfig
 
 	sn := d.Get("name").(string)
-	s, err := finder.DeliveryStreamByName(conn, sn)
+	s, err := finder.FindDeliveryStreamByName(conn, sn)
 
 	if !d.IsNewResource() && tfresource.NotFound(err) {
 		log.Printf("[WARN] Kinesis Firehose Delivery Stream (%s) not found, removing from state", d.Id())
@@ -2818,7 +2818,7 @@ func resourceDeliveryStreamDelete(d *schema.ResourceData, meta interface{}) erro
 		return fmt.Errorf("error deleting Kinesis Firehose Delivery Stream (%s): %w", sn, err)
 	}
 
-	_, err = waiter.DeliveryStreamDeleted(conn, sn)
+	_, err = waiter.waitDeliveryStreamDeleted(conn, sn)
 
 	if err != nil {
 		return fmt.Errorf("error waiting for Kinesis Firehose Delivery Stream (%s) delete: %w", sn, err)

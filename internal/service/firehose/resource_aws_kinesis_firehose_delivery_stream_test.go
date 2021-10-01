@@ -1493,7 +1493,7 @@ func testAccCheckKinesisFirehoseDeliveryStreamExists(n string, v *firehose.Deliv
 		conn := acctest.Provider.Meta().(*conns.AWSClient).FirehoseConn
 
 		sn := rs.Primary.Attributes["name"]
-		output, err := finder.DeliveryStreamByName(conn, sn)
+		output, err := finder.FindDeliveryStreamByName(conn, sn)
 
 		if err != nil {
 			return err
@@ -1697,7 +1697,7 @@ func testAccCheckKinesisFirehoseDeliveryStreamDestroy(s *terraform.State) error 
 		conn := acctest.Provider.Meta().(*conns.AWSClient).FirehoseConn
 
 		sn := rs.Primary.Attributes["name"]
-		_, err := finder.DeliveryStreamByName(conn, sn)
+		_, err := finder.FindDeliveryStreamByName(conn, sn)
 
 		if tfresource.NotFound(err) {
 			continue
