@@ -325,7 +325,7 @@ func testAccCheckAWSGlueSchemaExists(resourceName string, schema *glue.GetSchema
 		}
 
 		conn := acctest.Provider.Meta().(*conns.AWSClient).GlueConn
-		output, err := finder.SchemaByID(conn, rs.Primary.ID)
+		output, err := finder.FindSchemaByID(conn, rs.Primary.ID)
 		if err != nil {
 			return err
 		}
@@ -350,7 +350,7 @@ func testAccCheckAWSGlueSchemaDestroy(s *terraform.State) error {
 		}
 
 		conn := acctest.Provider.Meta().(*conns.AWSClient).GlueConn
-		output, err := finder.SchemaByID(conn, rs.Primary.ID)
+		output, err := finder.FindSchemaByID(conn, rs.Primary.ID)
 		if err != nil {
 			if tfawserr.ErrMessageContains(err, glue.ErrCodeEntityNotFoundException, "") {
 				return nil

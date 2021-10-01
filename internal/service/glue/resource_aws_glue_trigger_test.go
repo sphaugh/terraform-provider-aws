@@ -553,7 +553,7 @@ func testAccCheckAWSGlueTriggerExists(resourceName string, trigger *glue.Trigger
 
 		conn := acctest.Provider.Meta().(*conns.AWSClient).GlueConn
 
-		output, err := finder.TriggerByName(conn, rs.Primary.ID)
+		output, err := finder.FindTriggerByName(conn, rs.Primary.ID)
 		if err != nil {
 			return err
 		}
@@ -579,7 +579,7 @@ func testAccCheckAWSGlueTriggerDestroy(s *terraform.State) error {
 
 		conn := acctest.Provider.Meta().(*conns.AWSClient).GlueConn
 
-		output, err := finder.TriggerByName(conn, rs.Primary.ID)
+		output, err := finder.FindTriggerByName(conn, rs.Primary.ID)
 
 		if err != nil {
 			if tfawserr.ErrMessageContains(err, glue.ErrCodeEntityNotFoundException, "") {
