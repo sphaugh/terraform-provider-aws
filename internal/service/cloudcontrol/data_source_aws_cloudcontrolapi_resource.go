@@ -49,7 +49,7 @@ func dataSourceResourceRead(ctx context.Context, d *schema.ResourceData, meta in
 	conn := meta.(*conns.AWSClient).CloudControlConn
 
 	identifier := d.Get("identifier").(string)
-	resourceDescription, err := finder.ResourceByID(ctx, conn,
+	resourceDescription, err := finder.FindResourceByID(ctx, conn,
 		identifier,
 		d.Get("type_name").(string),
 		d.Get("type_version_id").(string),

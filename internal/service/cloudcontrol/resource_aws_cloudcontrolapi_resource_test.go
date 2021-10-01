@@ -479,7 +479,7 @@ func testAccCheckAwsCloudControlApiResourceDestroy(s *terraform.State) error {
 			continue
 		}
 
-		_, err := finder.ResourceByID(context.TODO(), conn, rs.Primary.ID, rs.Primary.Attributes["type_name"], "", "")
+		_, err := finder.FindResourceByID(context.TODO(), conn, rs.Primary.ID, rs.Primary.Attributes["type_name"], "", "")
 
 		if tfresource.NotFound(err) {
 			continue
