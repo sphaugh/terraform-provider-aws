@@ -748,7 +748,7 @@ func testAccCheckAWSEksAddonExists(ctx context.Context, resourceName string, add
 
 		conn := acctest.Provider.Meta().(*conns.AWSClient).EKSConn
 
-		output, err := finder.AddonByClusterNameAndAddonName(ctx, conn, clusterName, addonName)
+		output, err := finder.FindAddonByClusterNameAndAddonName(ctx, conn, clusterName, addonName)
 
 		if err != nil {
 			return err
@@ -775,7 +775,7 @@ func testAccCheckAWSEksAddonDestroy(s *terraform.State) error {
 			return err
 		}
 
-		_, err = finder.AddonByClusterNameAndAddonName(ctx, conn, clusterName, addonName)
+		_, err = finder.FindAddonByClusterNameAndAddonName(ctx, conn, clusterName, addonName)
 
 		if tfresource.NotFound(err) {
 			continue

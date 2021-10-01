@@ -269,7 +269,7 @@ func testAccCheckAWSEksIdentityProviderConfigExists(ctx context.Context, resourc
 
 		conn := acctest.Provider.Meta().(*conns.AWSClient).EKSConn
 
-		output, err := finder.OidcIdentityProviderConfigByClusterNameAndConfigName(ctx, conn, clusterName, configName)
+		output, err := finder.FindOIDCIdentityProviderConfigByClusterNameAndConfigName(ctx, conn, clusterName, configName)
 
 		if err != nil {
 			return err
@@ -296,7 +296,7 @@ func testAccCheckAWSEksIdentityProviderConfigDestroy(s *terraform.State) error {
 			return err
 		}
 
-		_, err = finder.OidcIdentityProviderConfigByClusterNameAndConfigName(ctx, conn, clusterName, configName)
+		_, err = finder.FindOIDCIdentityProviderConfigByClusterNameAndConfigName(ctx, conn, clusterName, configName)
 
 		if tfresource.NotFound(err) {
 			continue
