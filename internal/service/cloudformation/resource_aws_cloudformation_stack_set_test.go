@@ -648,7 +648,7 @@ func testAccCheckCloudFormationStackSetExists(resourceName string, v *cloudforma
 
 		conn := acctest.Provider.Meta().(*conns.AWSClient).CloudFormationConn
 
-		output, err := finder.StackSetByName(conn, rs.Primary.ID)
+		output, err := finder.FindStackSetByName(conn, rs.Primary.ID)
 
 		if err != nil {
 			return err
@@ -668,7 +668,7 @@ func testAccCheckAWSCloudFormationStackSetDestroy(s *terraform.State) error {
 			continue
 		}
 
-		_, err := finder.StackSetByName(conn, rs.Primary.ID)
+		_, err := finder.FindStackSetByName(conn, rs.Primary.ID)
 
 		if tfresource.NotFound(err) {
 			continue

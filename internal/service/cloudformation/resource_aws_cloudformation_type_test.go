@@ -154,7 +154,7 @@ func testAccCheckAwsCloudformationTypeExists(resourceName string) resource.TestC
 
 		conn := acctest.Provider.Meta().(*conns.AWSClient).CloudFormationConn
 
-		_, err := finder.TypeByARN(context.TODO(), conn, rs.Primary.ID)
+		_, err := finder.FindTypeByARN(context.TODO(), conn, rs.Primary.ID)
 
 		if err != nil {
 			return err
@@ -172,7 +172,7 @@ func testAccCheckAwsCloudformationTypeDestroy(s *terraform.State) error {
 			continue
 		}
 
-		_, err := finder.TypeByARN(context.TODO(), conn, rs.Primary.ID)
+		_, err := finder.FindTypeByARN(context.TODO(), conn, rs.Primary.ID)
 
 		if tfresource.NotFound(err) {
 			continue
