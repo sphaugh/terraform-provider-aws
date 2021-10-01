@@ -978,7 +978,7 @@ func testAccCheckAWSTransferServerExists(n string, v *transfer.DescribedServer) 
 
 		conn := acctest.Provider.Meta().(*conns.AWSClient).TransferConn
 
-		output, err := finder.ServerByID(conn, rs.Primary.ID)
+		output, err := finder.FindServerByID(conn, rs.Primary.ID)
 
 		if err != nil {
 			return err
@@ -998,7 +998,7 @@ func testAccCheckAWSTransferServerDestroy(s *terraform.State) error {
 			continue
 		}
 
-		_, err := finder.ServerByID(conn, rs.Primary.ID)
+		_, err := finder.FindServerByID(conn, rs.Primary.ID)
 
 		if tfresource.NotFound(err) {
 			continue
