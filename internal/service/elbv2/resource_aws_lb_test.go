@@ -1184,7 +1184,7 @@ func testAccCheckAWSLBExists(n string, res *elbv2.LoadBalancer) resource.TestChe
 
 		conn := acctest.Provider.Meta().(*conns.AWSClient).ELBV2Conn
 
-		lb, err := finder.LoadBalancerByARN(conn, rs.Primary.ID)
+		lb, err := finder.FindLoadBalancerByARN(conn, rs.Primary.ID)
 
 		if err != nil {
 			return fmt.Errorf("error reading LB (%s): %w", rs.Primary.ID, err)
@@ -1238,7 +1238,7 @@ func testAccCheckAWSLBDestroy(s *terraform.State) error {
 			continue
 		}
 
-		lb, err := finder.LoadBalancerByARN(conn, rs.Primary.ID)
+		lb, err := finder.FindLoadBalancerByARN(conn, rs.Primary.ID)
 
 		if tfawserr.ErrCodeContains(err, elb.ErrCodeAccessPointNotFoundException) {
 			continue
