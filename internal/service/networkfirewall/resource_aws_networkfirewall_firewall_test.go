@@ -384,7 +384,7 @@ func testAccCheckAwsNetworkFirewallFirewallDestroy(s *terraform.State) error {
 		}
 
 		conn := acctest.Provider.Meta().(*conns.AWSClient).NetworkFirewallConn
-		output, err := finder.Firewall(context.Background(), conn, rs.Primary.ID)
+		output, err := finder.FindFirewall(context.Background(), conn, rs.Primary.ID)
 		if tfawserr.ErrCodeEquals(err, networkfirewall.ErrCodeResourceNotFoundException) {
 			continue
 		}
@@ -411,7 +411,7 @@ func testAccCheckAwsNetworkFirewallFirewallExists(n string) resource.TestCheckFu
 		}
 
 		conn := acctest.Provider.Meta().(*conns.AWSClient).NetworkFirewallConn
-		output, err := finder.Firewall(context.Background(), conn, rs.Primary.ID)
+		output, err := finder.FindFirewall(context.Background(), conn, rs.Primary.ID)
 		if err != nil {
 			return err
 		}
