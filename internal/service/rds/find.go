@@ -36,7 +36,7 @@ func FindDBProxyTarget(conn *rds.RDS, dbProxyName, targetGroupName, targetType, 
 
 // FindDBProxyEndpoint returns matching FindDBProxyEndpoint.
 func FindDBProxyEndpoint(conn *rds.RDS, id string) (*rds.DBProxyEndpoint, error) {
-	dbProxyName, dbProxyEndpointName, err := ResourceAwsDBProxyEndpointParseID(id)
+	dbProxyName, dbProxyEndpointName, err := ResourceProxyEndpointParseID(id)
 	if err != nil {
 		return nil, err
 	}
