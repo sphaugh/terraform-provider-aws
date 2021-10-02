@@ -4,8 +4,7 @@ import (
 	"github.com/aws/aws-sdk-go/aws"
 	"github.com/aws/aws-sdk-go/service/rds"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/resource"
-	"github.com/hashicorp/terraform-provider-aws/aws/internal/service/rds/finder"
-	"github.com/hashicorp/terraform-provider-aws/aws/internal/tfresource"
+	"github.com/hashicorp/terraform-provider-aws/internal/tfresource"
 	"github.com/hashicorp/terraform-provider-aws/internal/verify"
 )
 
@@ -19,7 +18,7 @@ const (
 
 func statusEventSubscription(conn *rds.RDS, id string) resource.StateRefreshFunc {
 	return func() (interface{}, string, error) {
-		output, err := finder.FindEventSubscriptionByID(conn, id)
+		output, err := FindEventSubscriptionByID(conn, id)
 
 		if tfresource.NotFound(err) {
 			return nil, "", nil
@@ -36,7 +35,7 @@ func statusEventSubscription(conn *rds.RDS, id string) resource.StateRefreshFunc
 // statusDBProxyEndpoint fetches the ProxyEndpoint and its Status
 func statusDBProxyEndpoint(conn *rds.RDS, id string) resource.StateRefreshFunc {
 	return func() (interface{}, string, error) {
-		output, err := finder.FindDBProxyEndpoint(conn, id)
+		output, err := FindDBProxyEndpoint(conn, id)
 
 		if err != nil {
 			return nil, proxyEndpointStatusUnknown, err
@@ -52,7 +51,7 @@ func statusDBProxyEndpoint(conn *rds.RDS, id string) resource.StateRefreshFunc {
 
 func statusDBClusterRole(conn *rds.RDS, dbClusterID, roleARN string) resource.StateRefreshFunc {
 	return func() (interface{}, string, error) {
-		output, err := finder.FindDBClusterRoleByDBClusterIDAndRoleARN(conn, dbClusterID, roleARN)
+		output, err := FindDBClusterRoleByDBClusterIDAndRoleARN(conn, dbClusterID, roleARN)
 
 		if tfresource.NotFound(err) {
 			return nil, "", nil
