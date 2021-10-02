@@ -1,4 +1,4 @@
-package aws
+package eks_test
 
 import (
 	"fmt"
@@ -13,15 +13,15 @@ import (
 	sdkacctest "github.com/hashicorp/terraform-plugin-sdk/v2/helper/acctest"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/resource"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/terraform"
-	tfeks "github.com/hashicorp/terraform-provider-aws/aws/internal/service/eks"
-	"github.com/hashicorp/terraform-provider-aws/aws/internal/service/eks/finder"
-	"github.com/hashicorp/terraform-provider-aws/aws/internal/tfresource"
+	"github.com/hashicorp/terraform-provider-aws/internal/tfresource"
 	"github.com/hashicorp/terraform-provider-aws/internal/acctest"
 	"github.com/hashicorp/terraform-provider-aws/internal/conns"
 	"github.com/hashicorp/terraform-provider-aws/internal/provider"
 	"github.com/hashicorp/terraform-provider-aws/internal/sweep"
 	tftags "github.com/hashicorp/terraform-provider-aws/internal/tags"
 	"github.com/hashicorp/terraform-provider-aws/internal/verify"
+	tfeks "github.com/hashicorp/terraform-provider-aws/internal/service/eks"
+	tfeks "github.com/hashicorp/terraform-provider-aws/internal/service/eks"
 )
 
 func init() {
@@ -269,7 +269,7 @@ func testAccCheckAWSEksFargateProfileExists(resourceName string, fargateProfile 
 
 		conn := acctest.Provider.Meta().(*conns.AWSClient).EKSConn
 
-		output, err := finder.FindFargateProfileByClusterNameAndFargateProfileName(conn, clusterName, fargateProfileName)
+		output, err := tfeks.FindFargateProfileByClusterNameAndFargateProfileName(conn, clusterName, fargateProfileName)
 
 		if err != nil {
 			return err
@@ -295,7 +295,7 @@ func testAccCheckAWSEksFargateProfileDestroy(s *terraform.State) error {
 			return err
 		}
 
-		_, err = finder.FindFargateProfileByClusterNameAndFargateProfileName(conn, clusterName, fargateProfileName)
+		_, err = tfeks.FindFargateProfileByClusterNameAndFargateProfileName(conn, clusterName, fargateProfileName)
 
 		if tfresource.NotFound(err) {
 			continue
