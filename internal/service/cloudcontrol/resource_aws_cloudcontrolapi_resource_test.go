@@ -1,4 +1,4 @@
-package aws
+package cloudcontrol_test
 
 import (
 	"context"
@@ -11,13 +11,13 @@ import (
 	sdkacctest "github.com/hashicorp/terraform-plugin-sdk/v2/helper/acctest"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/resource"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/terraform"
-	"github.com/hashicorp/terraform-provider-aws/aws/internal/service/cloudcontrol/finder"
-	"github.com/hashicorp/terraform-provider-aws/aws/internal/tfresource"
+	"github.com/hashicorp/terraform-provider-aws/internal/tfresource"
 	"github.com/hashicorp/terraform-provider-aws/internal/acctest"
 	"github.com/hashicorp/terraform-provider-aws/internal/conns"
 	"github.com/hashicorp/terraform-provider-aws/internal/provider"
 	tftags "github.com/hashicorp/terraform-provider-aws/internal/tags"
 	"github.com/hashicorp/terraform-provider-aws/internal/verify"
+	tfcloudcontrol "github.com/hashicorp/terraform-provider-aws/internal/service/cloudcontrol"
 )
 
 func init() {
@@ -479,7 +479,7 @@ func testAccCheckAwsCloudControlApiResourceDestroy(s *terraform.State) error {
 			continue
 		}
 
-		_, err := finder.FindResourceByID(context.TODO(), conn, rs.Primary.ID, rs.Primary.Attributes["type_name"], "", "")
+		_, err := tfcloudcontrol.FindResourceByID(context.TODO(), conn, rs.Primary.ID, rs.Primary.Attributes["type_name"], "", "")
 
 		if tfresource.NotFound(err) {
 			continue
