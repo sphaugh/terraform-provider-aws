@@ -6,7 +6,6 @@ import (
 
 	"github.com/aws/aws-sdk-go/aws"
 	"github.com/aws/aws-sdk-go/service/appstream"
-	"github.com/hashicorp/terraform-provider-aws/aws/internal/service/appstream/lister"
 	"github.com/hashicorp/terraform-provider-aws/internal/verify"
 )
 
@@ -66,7 +65,7 @@ func FindImageBuilderByName(ctx context.Context, conn *appstream.AppStream, name
 
 	var result *appstream.ImageBuilder
 
-	err := lister.DescribeImageBuildersPagesWithContext(ctx, conn, input, func(page *appstream.DescribeImageBuildersOutput, lastPage bool) bool {
+	err := DescribeImageBuildersPagesWithContext(ctx, conn, input, func(page *appstream.DescribeImageBuildersOutput, lastPage bool) bool {
 		if page == nil {
 			return !lastPage
 		}
