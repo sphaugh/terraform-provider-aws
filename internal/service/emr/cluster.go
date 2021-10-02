@@ -246,7 +246,7 @@ func ResourceCluster() *schema.Resource {
 										Type:         schema.TypeString,
 										Required:     true,
 										ForceNew:     true,
-										ValidateFunc: validateAwsEMREBSVolumeType(),
+										ValidateFunc: validEBSVolumeType(),
 									},
 									"volumes_per_instance": {
 										Type:     schema.TypeInt,
@@ -315,7 +315,7 @@ func ResourceCluster() *schema.Resource {
 										Type:         schema.TypeString,
 										Required:     true,
 										ForceNew:     true,
-										ValidateFunc: validateAwsEMREBSVolumeType(),
+										ValidateFunc: validEBSVolumeType(),
 									},
 									"volumes_per_instance": {
 										Type:     schema.TypeInt,
@@ -512,7 +512,7 @@ func ResourceCluster() *schema.Resource {
 				Type:         schema.TypeString,
 				ForceNew:     true,
 				Optional:     true,
-				ValidateFunc: validateAwsEMRCustomAMIID,
+				ValidateFunc: validCustomAMIID,
 			},
 			"step_concurrency_level": {
 				Type:         schema.TypeInt,
@@ -589,7 +589,7 @@ func InstanceFleetConfigSchema() *schema.Resource {
 										Type:         schema.TypeString,
 										Required:     true,
 										ForceNew:     true,
-										ValidateFunc: validateAwsEMREBSVolumeType(),
+										ValidateFunc: validEBSVolumeType(),
 									},
 									"volumes_per_instance": {
 										Type:     schema.TypeInt,
