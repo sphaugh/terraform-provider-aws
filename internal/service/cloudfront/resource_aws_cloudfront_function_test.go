@@ -1,4 +1,4 @@
-package aws
+package cloudfront_test
 
 import (
 	"fmt"
@@ -11,15 +11,15 @@ import (
 	sdkacctest "github.com/hashicorp/terraform-plugin-sdk/v2/helper/acctest"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/resource"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/terraform"
-	"github.com/hashicorp/terraform-provider-aws/aws/internal/service/cloudfront/finder"
-	"github.com/hashicorp/terraform-provider-aws/aws/internal/service/cloudfront/lister"
-	"github.com/hashicorp/terraform-provider-aws/aws/internal/tfresource"
+	"github.com/hashicorp/terraform-provider-aws/internal/tfresource"
 	"github.com/hashicorp/terraform-provider-aws/internal/acctest"
 	"github.com/hashicorp/terraform-provider-aws/internal/conns"
 	"github.com/hashicorp/terraform-provider-aws/internal/provider"
 	"github.com/hashicorp/terraform-provider-aws/internal/sweep"
 	tftags "github.com/hashicorp/terraform-provider-aws/internal/tags"
 	"github.com/hashicorp/terraform-provider-aws/internal/verify"
+	tfcloudfront "github.com/hashicorp/terraform-provider-aws/internal/service/cloudfront"
+	tfcloudfront "github.com/hashicorp/terraform-provider-aws/internal/service/cloudfront"
 )
 
 func init() {
@@ -46,7 +46,7 @@ func testSweepCloudfrontFunctions(region string) error {
 	input := &cloudfront.ListFunctionsInput{}
 	var sweeperErrs *multierror.Error
 
-	err = lister.ListFunctionsPages(conn, input, func(page *cloudfront.ListFunctionsOutput, lastPage bool) bool {
+	err = tfcloudfront.ListFunctionsPages(conn, input, func(page *cloudfront.ListFunctionsOutput, lastPage bool) bool {
 		if page == nil {
 			return !lastPage
 		}
@@ -54,7 +54,7 @@ func testSweepCloudfrontFunctions(region string) error {
 		for _, item := range page.FunctionList.Items {
 			name := aws.StringValue(item.Name)
 
-			output, err := finder.FindFunctionByNameAndStage(conn, name, cloudfront.FunctionStageDevelopment)
+			output, err := tfcloudfront.FindFunctionByNameAndStage(conn, name, cloudfront.FunctionStageDevelopment)
 
 			if tfresource.NotFound(err) {
 				continue
@@ -315,7 +315,7 @@ func testAccCheckCloudfrontFunctionDestroy(s *terraform.State) error {
 			continue
 		}
 
-		_, err := finder.FindFunctionByNameAndStage(conn, rs.Primary.ID, cloudfront.FunctionStageDevelopment)
+		_, err := tfcloudfront.FindFunctionByNameAndStage(conn, rs.Primary.ID, cloudfront.FunctionStageDevelopment)
 
 		if tfresource.NotFound(err) {
 			continue
@@ -345,7 +345,7 @@ func testAccCheckAwsCloudfrontFunctionExists(n string, v *cloudfront.DescribeFun
 
 		conn := acctest.Provider.Meta().(*conns.AWSClient).CloudFrontConn
 
-		output, err := finder.FindFunctionByNameAndStage(conn, rs.Primary.ID, cloudfront.FunctionStageDevelopment)
+		output, err := tfcloudfront.FindFunctionByNameAndStage(conn, rs.Primary.ID, cloudfront.FunctionStageDevelopment)
 
 		if err != nil {
 			return err
