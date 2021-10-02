@@ -1,4 +1,4 @@
-package aws
+package sagemaker_test
 
 import (
 	"fmt"
@@ -11,14 +11,14 @@ import (
 	sdkacctest "github.com/hashicorp/terraform-plugin-sdk/v2/helper/acctest"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/resource"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/terraform"
-	"github.com/hashicorp/terraform-provider-aws/aws/internal/service/sagemaker/finder"
-	"github.com/hashicorp/terraform-provider-aws/aws/internal/tfresource"
+	"github.com/hashicorp/terraform-provider-aws/internal/tfresource"
 	"github.com/hashicorp/terraform-provider-aws/internal/acctest"
 	"github.com/hashicorp/terraform-provider-aws/internal/conns"
 	"github.com/hashicorp/terraform-provider-aws/internal/provider"
 	"github.com/hashicorp/terraform-provider-aws/internal/sweep"
 	tftags "github.com/hashicorp/terraform-provider-aws/internal/tags"
 	"github.com/hashicorp/terraform-provider-aws/internal/verify"
+	tfsagemaker "github.com/hashicorp/terraform-provider-aws/internal/service/sagemaker"
 )
 
 func init() {
@@ -176,7 +176,7 @@ func testAccCheckAWSSagemakerStudioLifecycleConfigDestroy(s *terraform.State) er
 			continue
 		}
 
-		_, err := finder.FindStudioLifecycleConfigByName(conn, rs.Primary.ID)
+		_, err := tfsagemaker.FindStudioLifecycleConfigByName(conn, rs.Primary.ID)
 
 		if tfresource.NotFound(err) {
 			continue
@@ -205,7 +205,7 @@ func testAccCheckAWSSagemakerStudioLifecycleConfigExists(n string, config *sagem
 
 		conn := acctest.Provider.Meta().(*conns.AWSClient).SageMakerConn
 
-		output, err := finder.FindStudioLifecycleConfigByName(conn, rs.Primary.ID)
+		output, err := tfsagemaker.FindStudioLifecycleConfigByName(conn, rs.Primary.ID)
 
 		if err != nil {
 			return err
