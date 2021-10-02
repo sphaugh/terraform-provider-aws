@@ -26,7 +26,7 @@ func testAccErrorCheckSkipAppStream(t *testing.T) resource.ErrorCheckFunc {
 	)
 }
 
-func TestAccAwsAppStreamFleet_basic(t *testing.T) {
+func TestAccAppStreamFleet_basic(t *testing.T) {
 	var fleetOutput appstream.Fleet
 	resourceName := "aws_appstream_fleet.test"
 	instanceType := "stream.standard.small"
@@ -60,7 +60,7 @@ func TestAccAwsAppStreamFleet_basic(t *testing.T) {
 	})
 }
 
-func TestAccAwsAppStreamFleet_disappears(t *testing.T) {
+func TestAccAppStreamFleet_disappears(t *testing.T) {
 	var fleetOutput appstream.Fleet
 	resourceName := "aws_appstream_fleet.test"
 	instanceType := "stream.standard.small"
@@ -87,7 +87,7 @@ func TestAccAwsAppStreamFleet_disappears(t *testing.T) {
 	})
 }
 
-func TestAccAwsAppStreamFleet_completeWithStop(t *testing.T) {
+func TestAccAppStreamFleet_completeWithStop(t *testing.T) {
 	var fleetOutput appstream.Fleet
 	resourceName := "aws_appstream_fleet.test"
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
@@ -137,7 +137,7 @@ func TestAccAwsAppStreamFleet_completeWithStop(t *testing.T) {
 	})
 }
 
-func TestAccAwsAppStreamFleet_completeWithoutStop(t *testing.T) {
+func TestAccAppStreamFleet_completeWithoutStop(t *testing.T) {
 	var fleetOutput appstream.Fleet
 	resourceName := "aws_appstream_fleet.test"
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
@@ -190,7 +190,7 @@ func TestAccAwsAppStreamFleet_completeWithoutStop(t *testing.T) {
 	})
 }
 
-func TestAccAwsAppStreamFleet_withTags(t *testing.T) {
+func TestAccAppStreamFleet_withTags(t *testing.T) {
 	var fleetOutput appstream.Fleet
 	resourceName := "aws_appstream_fleet.test"
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
