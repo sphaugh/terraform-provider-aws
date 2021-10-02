@@ -1,4 +1,4 @@
-package aws
+package servicecatalog_test
 
 import (
 	"fmt"
@@ -13,14 +13,14 @@ import (
 	sdkacctest "github.com/hashicorp/terraform-plugin-sdk/v2/helper/acctest"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/resource"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/terraform"
-	tfservicecatalog "github.com/hashicorp/terraform-provider-aws/aws/internal/service/servicecatalog"
-	"github.com/hashicorp/terraform-provider-aws/aws/internal/service/servicecatalog/waiter"
 	"github.com/hashicorp/terraform-provider-aws/internal/acctest"
 	"github.com/hashicorp/terraform-provider-aws/internal/conns"
 	"github.com/hashicorp/terraform-provider-aws/internal/provider"
 	"github.com/hashicorp/terraform-provider-aws/internal/sweep"
 	tftags "github.com/hashicorp/terraform-provider-aws/internal/tags"
 	"github.com/hashicorp/terraform-provider-aws/internal/verify"
+	tfservicecatalog "github.com/hashicorp/terraform-provider-aws/internal/service/servicecatalog"
+	tfservicecatalog "github.com/hashicorp/terraform-provider-aws/internal/service/servicecatalog"
 )
 
 // add sweeper to delete known test servicecat products
@@ -115,7 +115,7 @@ func TestAccAWSServiceCatalogProduct_basic(t *testing.T) {
 					resource.TestCheckResourceAttr(resourceName, "provisioning_artifact_parameters.0.name", rName),
 					resource.TestCheckResourceAttrSet(resourceName, "provisioning_artifact_parameters.0.template_url"),
 					resource.TestCheckResourceAttr(resourceName, "provisioning_artifact_parameters.0.type", servicecatalog.ProvisioningArtifactTypeCloudFormationTemplate),
-					resource.TestCheckResourceAttr(resourceName, "status", waiter.StatusCreated),
+					resource.TestCheckResourceAttr(resourceName, "status", tfservicecatalog.StatusCreated),
 					resource.TestCheckResourceAttr(resourceName, "support_description", "supportbeskrivning"),
 					resource.TestCheckResourceAttr(resourceName, "support_email", acctest.DefaultEmailAddress),
 					resource.TestCheckResourceAttr(resourceName, "support_url", domain),
