@@ -1,4 +1,4 @@
-package aws
+package firehose
 
 import (
 	"fmt"
@@ -13,14 +13,12 @@ import (
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/resource"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/validation"
-	tftags "github.com/hashicorp/terraform-provider-aws/aws/internal/tags"
-	"github.com/hashicorp/terraform-provider-aws/aws/internal/service/firehose/finder"
-	"github.com/hashicorp/terraform-provider-aws/aws/internal/service/firehose/waiter"
-	iamwaiter "github.com/hashicorp/terraform-provider-aws/aws/internal/service/iam/waiter"
-	"github.com/hashicorp/terraform-provider-aws/aws/internal/tfresource"
+	tftags "github.com/hashicorp/terraform-provider-aws/internal/tags"
+	"github.com/hashicorp/terraform-provider-aws/internal/tfresource"
 	"github.com/hashicorp/terraform-provider-aws/internal/conns"
 	tftags "github.com/hashicorp/terraform-provider-aws/internal/tags"
 	"github.com/hashicorp/terraform-provider-aws/internal/verify"
+	tfiam "github.com/hashicorp/terraform-provider-aws/internal/service/iam"
 )
 
 const (
@@ -2524,7 +2522,7 @@ func resourceDeliveryStreamCreate(d *schema.ResourceData, meta interface{}) erro
 		createInput.Tags = tags.IgnoreAws().FirehoseTags()
 	}
 
-	err := resource.Retry(iamwaiter.PropagationTimeout, func() *resource.RetryError {
+	err := resource.Retry(tfiam.PropagationTimeout, func() *resource.RetryError {
 		_, err := conn.CreateDeliveryStream(createInput)
 		if err != nil {
 			// Access was denied when calling Glue. Please ensure that the role specified in the data format conversion configuration has the necessary permissions.
@@ -2561,7 +2559,7 @@ func resourceDeliveryStreamCreate(d *schema.ResourceData, meta interface{}) erro
 		return fmt.Errorf("error creating Kinesis Firehose Delivery Stream: %s", err)
 	}
 
-	s, err := waiter.waitDeliveryStreamCreated(conn, sn)
+	s, err := waitDeliveryStreamCreated(conn, sn)
 
 	if err != nil {
 		return fmt.Errorf("error waiting for Kinesis Firehose Delivery Stream (%s) create: %w", sn, err)
@@ -2582,7 +2580,7 @@ func resourceDeliveryStreamCreate(d *schema.ResourceData, meta interface{}) erro
 			return fmt.Errorf("error starting Kinesis Firehose Delivery Stream (%s) encryption: %w", sn, err)
 		}
 
-		if _, err := waiter.waitDeliveryStreamEncryptionEnabled(conn, sn); err != nil {
+		if _, err := waitDeliveryStreamEncryptionEnabled(conn, sn); err != nil {
 			return fmt.Errorf("error waiting for Kinesis Firehose Delivery Stream (%s) encryption enable: %w", sn, err)
 		}
 	}
@@ -2672,7 +2670,7 @@ func resourceDeliveryStreamUpdate(d *schema.ResourceData, meta interface{}) erro
 		}
 	}
 
-	err := resource.Retry(iamwaiter.PropagationTimeout, func() *resource.RetryError {
+	err := resource.Retry(tfiam.PropagationTimeout, func() *resource.RetryError {
 		_, err := conn.UpdateDestination(updateInput)
 		if err != nil {
 			// Access was denied when calling Glue. Please ensure that the role specified in the data format conversion configuration has the necessary permissions.
@@ -2732,7 +2730,7 @@ func resourceDeliveryStreamUpdate(d *schema.ResourceData, meta interface{}) erro
 				return fmt.Errorf("error stopping Kinesis Firehose Delivery Stream (%s) encryption: %w", sn, err)
 			}
 
-			if _, err := waiter.waitDeliveryStreamEncryptionDisabled(conn, sn); err != nil {
+			if _, err := waitDeliveryStreamEncryptionDisabled(conn, sn); err != nil {
 				return fmt.Errorf("error waiting for Kinesis Firehose Delivery Stream (%s) encryption disable: %w", sn, err)
 			}
 		} else {
@@ -2748,7 +2746,7 @@ func resourceDeliveryStreamUpdate(d *schema.ResourceData, meta interface{}) erro
 					"error starting Kinesis Firehose Delivery Stream (%s) encryption: %w", sn, err)
 			}
 
-			if _, err := waiter.waitDeliveryStreamEncryptionEnabled(conn, sn); err != nil {
+			if _, err := waitDeliveryStreamEncryptionEnabled(conn, sn); err != nil {
 				return fmt.Errorf("error waiting for Kinesis Firehose Delivery Stream (%s) encryption enable: %w", sn, err)
 			}
 		}
@@ -2763,7 +2761,7 @@ func resourceDeliveryStreamRead(d *schema.ResourceData, meta interface{}) error 
 	ignoreTagsConfig := meta.(*conns.AWSClient).IgnoreTagsConfig
 
 	sn := d.Get("name").(string)
-	s, err := finder.FindDeliveryStreamByName(conn, sn)
+	s, err := FindDeliveryStreamByName(conn, sn)
 
 	if !d.IsNewResource() && tfresource.NotFound(err) {
 		log.Printf("[WARN] Kinesis Firehose Delivery Stream (%s) not found, removing from state", d.Id())
@@ -2818,7 +2816,7 @@ func resourceDeliveryStreamDelete(d *schema.ResourceData, meta interface{}) erro
 		return fmt.Errorf("error deleting Kinesis Firehose Delivery Stream (%s): %w", sn, err)
 	}
 
-	_, err = waiter.waitDeliveryStreamDeleted(conn, sn)
+	_, err = waitDeliveryStreamDeleted(conn, sn)
 
 	if err != nil {
 		return fmt.Errorf("error waiting for Kinesis Firehose Delivery Stream (%s) delete: %w", sn, err)

@@ -1,4 +1,4 @@
-package aws
+package firehose_test
 
 import (
 	"fmt"
@@ -14,14 +14,14 @@ import (
 	sdkacctest "github.com/hashicorp/terraform-plugin-sdk/v2/helper/acctest"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/resource"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/terraform"
-	"github.com/hashicorp/terraform-provider-aws/aws/internal/service/firehose/finder"
-	"github.com/hashicorp/terraform-provider-aws/aws/internal/tfresource"
+	"github.com/hashicorp/terraform-provider-aws/internal/tfresource"
 	"github.com/hashicorp/terraform-provider-aws/internal/acctest"
 	"github.com/hashicorp/terraform-provider-aws/internal/conns"
 	"github.com/hashicorp/terraform-provider-aws/internal/provider"
 	"github.com/hashicorp/terraform-provider-aws/internal/sweep"
 	tftags "github.com/hashicorp/terraform-provider-aws/internal/tags"
 	"github.com/hashicorp/terraform-provider-aws/internal/verify"
+	tffirehose "github.com/hashicorp/terraform-provider-aws/internal/service/firehose"
 )
 
 func init() {
@@ -1493,7 +1493,7 @@ func testAccCheckKinesisFirehoseDeliveryStreamExists(n string, v *firehose.Deliv
 		conn := acctest.Provider.Meta().(*conns.AWSClient).FirehoseConn
 
 		sn := rs.Primary.Attributes["name"]
-		output, err := finder.FindDeliveryStreamByName(conn, sn)
+		output, err := tffirehose.FindDeliveryStreamByName(conn, sn)
 
 		if err != nil {
 			return err
@@ -1697,7 +1697,7 @@ func testAccCheckKinesisFirehoseDeliveryStreamDestroy(s *terraform.State) error 
 		conn := acctest.Provider.Meta().(*conns.AWSClient).FirehoseConn
 
 		sn := rs.Primary.Attributes["name"]
-		_, err := finder.FindDeliveryStreamByName(conn, sn)
+		_, err := tffirehose.FindDeliveryStreamByName(conn, sn)
 
 		if tfresource.NotFound(err) {
 			continue
