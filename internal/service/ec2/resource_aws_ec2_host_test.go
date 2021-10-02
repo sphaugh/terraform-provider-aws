@@ -1,4 +1,4 @@
-package aws
+package ec2_test
 
 import (
 	"fmt"
@@ -11,14 +11,14 @@ import (
 	sdkacctest "github.com/hashicorp/terraform-plugin-sdk/v2/helper/acctest"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/resource"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/terraform"
-	"github.com/hashicorp/terraform-provider-aws/aws/internal/service/ec2/finder"
-	"github.com/hashicorp/terraform-provider-aws/aws/internal/tfresource"
+	"github.com/hashicorp/terraform-provider-aws/internal/tfresource"
 	"github.com/hashicorp/terraform-provider-aws/internal/acctest"
 	"github.com/hashicorp/terraform-provider-aws/internal/conns"
 	"github.com/hashicorp/terraform-provider-aws/internal/provider"
 	"github.com/hashicorp/terraform-provider-aws/internal/sweep"
 	tftags "github.com/hashicorp/terraform-provider-aws/internal/tags"
 	"github.com/hashicorp/terraform-provider-aws/internal/verify"
+	tfec2 "github.com/hashicorp/terraform-provider-aws/internal/service/ec2"
 )
 
 func init() {
@@ -233,7 +233,7 @@ func testAccCheckEc2HostExists(n string, v *ec2.Host) resource.TestCheckFunc {
 
 		conn := acctest.Provider.Meta().(*conns.AWSClient).EC2Conn
 
-		output, err := finder.FindHostByID(conn, rs.Primary.ID)
+		output, err := tfec2.FindHostByID(conn, rs.Primary.ID)
 
 		if err != nil {
 			return err
@@ -253,7 +253,7 @@ func testAccCheckEc2HostDestroy(s *terraform.State) error {
 			continue
 		}
 
-		_, err := finder.FindHostByID(conn, rs.Primary.ID)
+		_, err := tfec2.FindHostByID(conn, rs.Primary.ID)
 
 		if tfresource.NotFound(err) {
 			continue
