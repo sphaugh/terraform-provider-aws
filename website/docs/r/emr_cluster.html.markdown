@@ -853,13 +853,13 @@ EOF
 
 ## Import
 
-EMR clusters can be imported using the `id`, e.g.
+EMR clusters can be imported using the `id`, e.g.,
 
 ```
 $ terraform import aws_emr_cluster.cluster j-123456ABCDEF
 ```
 
-Since the API does not return the actual values for Kerberos configurations, environments with those Terraform configurations will need to use the [`lifecycle` configuration block `ignore_changes` argument](https://www.terraform.io/docs/configuration/meta-arguments/lifecycle.html#ignore_changes) available to all Terraform resources to prevent perpetual differences, e.g.
+Since the API does not return the actual values for Kerberos configurations, environments with those Terraform configurations will need to use the [`lifecycle` configuration block `ignore_changes` argument](https://www.terraform.io/docs/configuration/meta-arguments/lifecycle.html#ignore_changes) available to all Terraform resources to prevent perpetual differences, e.g.,
 
 ```terraform
 resource "aws_emr_cluster" "example" {
