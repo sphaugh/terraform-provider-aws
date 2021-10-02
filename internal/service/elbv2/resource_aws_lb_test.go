@@ -1,4 +1,4 @@
-package aws
+package elbv2_test
 
 import (
 	"errors"
@@ -15,13 +15,13 @@ import (
 	sdkacctest "github.com/hashicorp/terraform-plugin-sdk/v2/helper/acctest"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/resource"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/terraform"
-	"github.com/hashicorp/terraform-provider-aws/aws/internal/service/elbv2/finder"
 	"github.com/hashicorp/terraform-provider-aws/internal/acctest"
 	"github.com/hashicorp/terraform-provider-aws/internal/conns"
 	"github.com/hashicorp/terraform-provider-aws/internal/provider"
 	"github.com/hashicorp/terraform-provider-aws/internal/sweep"
 	tftags "github.com/hashicorp/terraform-provider-aws/internal/tags"
 	"github.com/hashicorp/terraform-provider-aws/internal/verify"
+	tfelbv2 "github.com/hashicorp/terraform-provider-aws/internal/service/elbv2"
 )
 
 func init() {
@@ -1184,7 +1184,7 @@ func testAccCheckAWSLBExists(n string, res *elbv2.LoadBalancer) resource.TestChe
 
 		conn := acctest.Provider.Meta().(*conns.AWSClient).ELBV2Conn
 
-		lb, err := finder.FindLoadBalancerByARN(conn, rs.Primary.ID)
+		lb, err := tfelbv2.FindLoadBalancerByARN(conn, rs.Primary.ID)
 
 		if err != nil {
 			return fmt.Errorf("error reading LB (%s): %w", rs.Primary.ID, err)
@@ -1238,7 +1238,7 @@ func testAccCheckAWSLBDestroy(s *terraform.State) error {
 			continue
 		}
 
-		lb, err := finder.FindLoadBalancerByARN(conn, rs.Primary.ID)
+		lb, err := tfelbv2.FindLoadBalancerByARN(conn, rs.Primary.ID)
 
 		if tfawserr.ErrCodeContains(err, elb.ErrCodeAccessPointNotFoundException) {
 			continue

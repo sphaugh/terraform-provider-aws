@@ -1,4 +1,4 @@
-package aws
+package elbv2_test
 
 import (
 	"errors"
@@ -13,10 +13,10 @@ import (
 	sdkacctest "github.com/hashicorp/terraform-plugin-sdk/v2/helper/acctest"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/resource"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/terraform"
-	"github.com/hashicorp/terraform-provider-aws/aws/internal/service/elbv2/finder"
 	"github.com/hashicorp/terraform-provider-aws/internal/acctest"
 	"github.com/hashicorp/terraform-provider-aws/internal/conns"
 	"github.com/hashicorp/terraform-provider-aws/internal/sweep"
+	tfelbv2 "github.com/hashicorp/terraform-provider-aws/internal/service/elbv2"
 )
 
 func init() {
@@ -2993,7 +2993,7 @@ func testAccCheckAWSLBTargetGroupDestroy(s *terraform.State) error {
 			continue
 		}
 
-		targetGroup, err := finder.FindTargetGroupByARN(conn, rs.Primary.ID)
+		targetGroup, err := tfelbv2.FindTargetGroupByARN(conn, rs.Primary.ID)
 
 		if tfawserr.ErrCodeEquals(err, elbv2.ErrCodeTargetGroupNotFoundException) {
 			continue
@@ -3026,7 +3026,7 @@ func testAccCheckAWSLBTargetGroupExists(n string, res *elbv2.TargetGroup) resour
 
 		conn := acctest.Provider.Meta().(*conns.AWSClient).ELBV2Conn
 
-		targetGroup, err := finder.FindTargetGroupByARN(conn, rs.Primary.ID)
+		targetGroup, err := tfelbv2.FindTargetGroupByARN(conn, rs.Primary.ID)
 
 		if err != nil {
 			return fmt.Errorf("error reading ELBv2 Target Group (%s): %w", rs.Primary.ID, err)
