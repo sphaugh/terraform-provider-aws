@@ -18,10 +18,6 @@ import (
 	"github.com/hashicorp/terraform-provider-aws/internal/sweep"
 )
 
-
-
-
-
 func TestAccEC2VPNGateway_basic(t *testing.T) {
 	var v, v2 ec2.VpnGateway
 	resourceName := "aws_vpn_gateway.test"

@@ -26,10 +26,6 @@ import (
 	"github.com/hashicorp/terraform-provider-aws/internal/tfresource"
 )
 
-
-
-
-
 func TestProtocolStateFunc(t *testing.T) {
 	cases := []struct {
 		input    interface{}

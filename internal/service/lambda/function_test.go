@@ -24,15 +24,11 @@ import (
 	"github.com/hashicorp/terraform-provider-aws/internal/sweep"
 )
 
-
-
 func testAccErrorCheckSkipLambda(t *testing.T) resource.ErrorCheckFunc {
 	return acctest.ErrorCheckSkipMessagesContaining(t,
 		"InvalidParameterValueException: Unsupported source arn",
 	)
 }
-
-
 
 func TestAccLambdaFunction_basic(t *testing.T) {
 	var conf lambda.GetFunctionOutput

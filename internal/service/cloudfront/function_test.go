@@ -18,15 +18,11 @@ import (
 	"github.com/hashicorp/terraform-provider-aws/internal/tfresource"
 )
 
-
-
 func testAccErrorCheckSkipFunction(t *testing.T) resource.ErrorCheckFunc {
 	return acctest.ErrorCheckSkipMessagesContaining(t,
 		"InvalidParameterValueException: Unsupported source arn",
 	)
 }
-
-
 
 func TestAccCloudFrontFunction_basic(t *testing.T) {
 	var conf cloudfront.DescribeFunctionOutput

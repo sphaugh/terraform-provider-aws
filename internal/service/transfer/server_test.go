@@ -19,10 +19,6 @@ import (
 	"github.com/hashicorp/terraform-provider-aws/internal/tfresource"
 )
 
-
-
-
-
 func testAccErrorCheckSkipTransfer(t *testing.T) resource.ErrorCheckFunc {
 	return acctest.ErrorCheckSkipMessagesContaining(t,
 		"Invalid server type: PUBLIC",

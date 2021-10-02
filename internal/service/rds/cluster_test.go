@@ -21,8 +21,6 @@ import (
 	"github.com/hashicorp/terraform-provider-aws/internal/sweep"
 )
 
-
-
 func testAccErrorCheckSkipRDS(t *testing.T) resource.ErrorCheckFunc {
 	return acctest.ErrorCheckSkipMessagesContaining(t,
 		"engine mode serverless you requested is currently unavailable",
@@ -32,8 +30,6 @@ func testAccErrorCheckSkipRDS(t *testing.T) resource.ErrorCheckFunc {
 		"Read replica DB clusters are not available in this region for engine aurora",
 	)
 }
-
-
 
 func TestAccRDSCluster_basic(t *testing.T) {
 	var dbCluster rds.DBCluster

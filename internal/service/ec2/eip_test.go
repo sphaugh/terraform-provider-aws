@@ -24,10 +24,6 @@ import (
 	"github.com/hashicorp/terraform-provider-aws/internal/tfresource"
 )
 
-
-
-
-
 func TestAccEC2EIP_basic(t *testing.T) {
 	var conf ec2.Address
 	resourceName := "aws_eip.test"

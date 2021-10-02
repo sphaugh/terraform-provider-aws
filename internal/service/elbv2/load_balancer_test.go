@@ -21,16 +21,12 @@ import (
 	"github.com/hashicorp/terraform-provider-aws/internal/sweep"
 )
 
-
-
 func testAccErrorCheckSkipELBv2(t *testing.T) resource.ErrorCheckFunc {
 	return acctest.ErrorCheckSkipMessagesContaining(t,
 		"ValidationError: Type must be one of: 'application, network'",
 		"ValidationError: Action type 'authenticate-cognito' must be one of 'redirect,fixed-response,forward,authenticate-oidc'",
 	)
 }
-
-
 
 func TestLBCloudwatchSuffixFromARN(t *testing.T) {
 	cases := []struct {

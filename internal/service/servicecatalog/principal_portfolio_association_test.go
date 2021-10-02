@@ -19,10 +19,6 @@ import (
 	"github.com/hashicorp/terraform-provider-aws/internal/tfresource"
 )
 
-
-
-
-
 func TestAccServiceCatalogPrincipalPortfolioAssociation_basic(t *testing.T) {
 	resourceName := "aws_servicecatalog_principal_portfolio_association.test"
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")

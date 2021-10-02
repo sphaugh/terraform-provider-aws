@@ -26,16 +26,12 @@ import (
 	"github.com/hashicorp/terraform-provider-aws/internal/sweep"
 )
 
-
-
 func testAccErrorCheckSkipEC2(t *testing.T) resource.ErrorCheckFunc {
 	return acctest.ErrorCheckSkipMessagesContaining(t,
 		"VolumeTypeNotAvailableInRegion",
 		"Invalid value specified for Phase",
 	)
 }
-
-
 
 func TestFetchRootDevice(t *testing.T) {
 	cases := []struct {

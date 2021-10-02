@@ -18,10 +18,6 @@ import (
 	"github.com/hashicorp/terraform-provider-aws/internal/sweep"
 )
 
-
-
-
-
 func TestAccServiceCatalogServiceAction_basic(t *testing.T) {
 	resourceName := "aws_servicecatalog_service_action.test"
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")

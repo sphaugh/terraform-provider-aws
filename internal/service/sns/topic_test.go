@@ -22,10 +22,6 @@ import (
 	awspolicy "github.com/jen20/awspolicyequivalence"
 )
 
-
-
-
-
 func testAccErrorCheckSkipSNS(t *testing.T) resource.ErrorCheckFunc {
 	return acctest.ErrorCheckSkipMessagesContaining(t,
 		"Invalid protocol type: firehose",

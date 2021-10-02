@@ -26,15 +26,11 @@ import (
 	"github.com/hashicorp/terraform-provider-aws/internal/sweep"
 )
 
-
-
 func testAccErrorCheckSkipAutoScaling(t *testing.T) resource.ErrorCheckFunc {
 	return acctest.ErrorCheckSkipMessagesContaining(t,
 		"gp3 is invalid",
 	)
 }
-
-
 
 func TestAccAutoScalingGroup_basic(t *testing.T) {
 	var group autoscaling.Group

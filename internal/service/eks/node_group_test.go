@@ -20,10 +20,6 @@ import (
 	"github.com/hashicorp/terraform-provider-aws/internal/tfresource"
 )
 
-
-
-
-
 func TestAccEKSNodeGroup_basic(t *testing.T) {
 	var nodeGroup eks.Nodegroup
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")

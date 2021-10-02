@@ -18,10 +18,6 @@ import (
 	"github.com/hashicorp/terraform-provider-aws/internal/tfresource"
 )
 
-
-
-
-
 func TestAccServiceCatalogTagOptionResourceAssociation_basic(t *testing.T) {
 	resourceName := "aws_servicecatalog_tag_option_resource_association.test"
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
