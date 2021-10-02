@@ -1,4 +1,4 @@
-package aws
+package cloudwatchevents_test
 
 import (
 	"fmt"
@@ -14,15 +14,15 @@ import (
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/resource"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/terraform"
 	"github.com/hashicorp/terraform-provider-aws/internal/create"
-	"github.com/hashicorp/terraform-provider-aws/aws/internal/service/cloudwatchevents/finder"
-	"github.com/hashicorp/terraform-provider-aws/aws/internal/service/cloudwatchevents/lister"
-	"github.com/hashicorp/terraform-provider-aws/aws/internal/tfresource"
+	"github.com/hashicorp/terraform-provider-aws/internal/tfresource"
 	"github.com/hashicorp/terraform-provider-aws/internal/acctest"
 	"github.com/hashicorp/terraform-provider-aws/internal/conns"
 	"github.com/hashicorp/terraform-provider-aws/internal/provider"
 	"github.com/hashicorp/terraform-provider-aws/internal/sweep"
 	tftags "github.com/hashicorp/terraform-provider-aws/internal/tags"
 	"github.com/hashicorp/terraform-provider-aws/internal/verify"
+	tfcloudwatchevents "github.com/hashicorp/terraform-provider-aws/internal/service/cloudwatchevents"
+	tfcloudwatchevents "github.com/hashicorp/terraform-provider-aws/internal/service/cloudwatchevents"
 )
 
 func init() {
@@ -49,7 +49,7 @@ func testSweepCloudWatchEventRules(region string) error {
 
 	rulesInput := &events.ListRulesInput{}
 
-	err = lister.ListRulesPages(conn, rulesInput, func(rulesPage *events.ListRulesOutput, lastPage bool) bool {
+	err = tfcloudwatchevents.ListRulesPages(conn, rulesInput, func(rulesPage *events.ListRulesOutput, lastPage bool) bool {
 		if rulesPage == nil {
 			return !lastPage
 		}
@@ -586,7 +586,7 @@ func testAccCheckCloudWatchEventRuleExists(n string, rule *events.DescribeRuleOu
 
 		conn := acctest.Provider.Meta().(*conns.AWSClient).CloudWatchEventsConn
 
-		resp, err := finder.FindRuleByResourceID(conn, rs.Primary.ID)
+		resp, err := tfcloudwatchevents.FindRuleByResourceID(conn, rs.Primary.ID)
 
 		if err != nil {
 			return err
@@ -607,7 +607,7 @@ func testAccCheckCloudWatchEventRuleEnabled(n string, desired string) resource.T
 
 		conn := acctest.Provider.Meta().(*conns.AWSClient).CloudWatchEventsConn
 
-		resp, err := finder.FindRuleByResourceID(conn, rs.Primary.ID)
+		resp, err := tfcloudwatchevents.FindRuleByResourceID(conn, rs.Primary.ID)
 
 		if err != nil {
 			return err
@@ -629,7 +629,7 @@ func testAccCheckAWSCloudWatchEventRuleDestroy(s *terraform.State) error {
 			continue
 		}
 
-		_, err := finder.FindRuleByResourceID(conn, rs.Primary.ID)
+		_, err := tfcloudwatchevents.FindRuleByResourceID(conn, rs.Primary.ID)
 
 		if tfresource.NotFound(err) {
 			continue
