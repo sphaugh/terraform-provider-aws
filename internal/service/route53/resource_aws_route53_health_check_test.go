@@ -1,4 +1,4 @@
-package aws
+package route53_test
 
 import (
 	"context"
@@ -17,14 +17,14 @@ import (
 	sdkacctest "github.com/hashicorp/terraform-plugin-sdk/v2/helper/acctest"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/resource"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/terraform"
-	"github.com/hashicorp/terraform-provider-aws/aws/internal/service/route53/finder"
-	"github.com/hashicorp/terraform-provider-aws/aws/internal/tfresource"
+	"github.com/hashicorp/terraform-provider-aws/internal/tfresource"
 	"github.com/hashicorp/terraform-provider-aws/internal/acctest"
 	"github.com/hashicorp/terraform-provider-aws/internal/conns"
 	"github.com/hashicorp/terraform-provider-aws/internal/provider"
 	"github.com/hashicorp/terraform-provider-aws/internal/sweep"
 	tftags "github.com/hashicorp/terraform-provider-aws/internal/tags"
 	"github.com/hashicorp/terraform-provider-aws/internal/verify"
+	tfroute53 "github.com/hashicorp/terraform-provider-aws/internal/service/route53"
 )
 
 func init() {
@@ -469,7 +469,7 @@ func testAccCheckRoute53HealthCheckDestroy(s *terraform.State) error {
 			continue
 		}
 
-		_, err := finder.FindHealthCheckByID(conn, rs.Primary.ID)
+		_, err := tfroute53.FindHealthCheckByID(conn, rs.Primary.ID)
 
 		if tfresource.NotFound(err) {
 			continue
@@ -498,7 +498,7 @@ func testAccCheckRoute53HealthCheckExists(n string, v *route53.HealthCheck) reso
 
 		conn := acctest.Provider.Meta().(*conns.AWSClient).Route53Conn
 
-		output, err := finder.FindHealthCheckByID(conn, rs.Primary.ID)
+		output, err := tfroute53.FindHealthCheckByID(conn, rs.Primary.ID)
 
 		if err != nil {
 			return err
