@@ -7,8 +7,7 @@ import (
 	"github.com/aws/aws-sdk-go/service/cloudformation"
 	"github.com/hashicorp/aws-sdk-go-base/tfawserr"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/resource"
-	tfcloudformation "github.com/hashicorp/terraform-provider-aws/aws/internal/service/cloudformation"
-	"github.com/hashicorp/terraform-provider-aws/aws/internal/tfresource"
+	"github.com/hashicorp/terraform-provider-aws/internal/tfresource"
 	"github.com/hashicorp/terraform-provider-aws/internal/verify"
 )
 
@@ -45,7 +44,7 @@ func FindStackByID(conn *cloudformation.CloudFormation, id string) (*cloudformat
 
 	output, err := conn.DescribeStacks(input)
 
-	if tfawserr.ErrMessageContains(err, tfcloudformation.ErrCodeValidationError, "does not exist") {
+	if tfawserr.ErrMessageContains(err, ErrCodeValidationError, "does not exist") {
 		return nil, &resource.NotFoundError{
 			LastError:   err,
 			LastRequest: input,
