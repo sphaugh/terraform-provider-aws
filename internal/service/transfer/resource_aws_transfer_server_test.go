@@ -1,4 +1,4 @@
-package aws
+package transfer_test
 
 import (
 	"fmt"
@@ -12,14 +12,14 @@ import (
 	sdkacctest "github.com/hashicorp/terraform-plugin-sdk/v2/helper/acctest"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/resource"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/terraform"
-	"github.com/hashicorp/terraform-provider-aws/aws/internal/service/transfer/finder"
-	"github.com/hashicorp/terraform-provider-aws/aws/internal/tfresource"
+	"github.com/hashicorp/terraform-provider-aws/internal/tfresource"
 	"github.com/hashicorp/terraform-provider-aws/internal/acctest"
 	"github.com/hashicorp/terraform-provider-aws/internal/conns"
 	"github.com/hashicorp/terraform-provider-aws/internal/provider"
 	"github.com/hashicorp/terraform-provider-aws/internal/sweep"
 	tftags "github.com/hashicorp/terraform-provider-aws/internal/tags"
 	"github.com/hashicorp/terraform-provider-aws/internal/verify"
+	tftransfer "github.com/hashicorp/terraform-provider-aws/internal/service/transfer"
 )
 
 func init() {
@@ -978,7 +978,7 @@ func testAccCheckAWSTransferServerExists(n string, v *transfer.DescribedServer) 
 
 		conn := acctest.Provider.Meta().(*conns.AWSClient).TransferConn
 
-		output, err := finder.FindServerByID(conn, rs.Primary.ID)
+		output, err := tftransfer.FindServerByID(conn, rs.Primary.ID)
 
 		if err != nil {
 			return err
@@ -998,7 +998,7 @@ func testAccCheckAWSTransferServerDestroy(s *terraform.State) error {
 			continue
 		}
 
-		_, err := finder.FindServerByID(conn, rs.Primary.ID)
+		_, err := tftransfer.FindServerByID(conn, rs.Primary.ID)
 
 		if tfresource.NotFound(err) {
 			continue
