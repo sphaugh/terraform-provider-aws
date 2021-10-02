@@ -1,4 +1,4 @@
-package aws
+package autoscalingplans_test
 
 import (
 	"fmt"
@@ -14,13 +14,13 @@ import (
 	sdkacctest "github.com/hashicorp/terraform-plugin-sdk/v2/helper/acctest"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/resource"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/terraform"
-	"github.com/hashicorp/terraform-provider-aws/aws/internal/service/autoscalingplans/finder"
 	"github.com/hashicorp/terraform-provider-aws/internal/acctest"
 	"github.com/hashicorp/terraform-provider-aws/internal/conns"
 	"github.com/hashicorp/terraform-provider-aws/internal/provider"
 	"github.com/hashicorp/terraform-provider-aws/internal/sweep"
 	tftags "github.com/hashicorp/terraform-provider-aws/internal/tags"
 	"github.com/hashicorp/terraform-provider-aws/internal/verify"
+	tfautoscalingplans "github.com/hashicorp/terraform-provider-aws/internal/service/autoscalingplans"
 )
 
 func init() {
@@ -299,7 +299,7 @@ func testAccCheckAutoScalingPlansScalingPlanDestroy(s *terraform.State) error {
 			return err
 		}
 
-		scalingPlan, err := finder.FindScalingPlan(conn, rs.Primary.Attributes["name"], scalingPlanVersion)
+		scalingPlan, err := tfautoscalingplans.FindScalingPlan(conn, rs.Primary.Attributes["name"], scalingPlanVersion)
 		if err != nil {
 			return err
 		}
@@ -329,7 +329,7 @@ func testAccCheckAutoScalingPlansScalingPlanExists(name string, v *autoscalingpl
 			return err
 		}
 
-		scalingPlan, err := finder.FindScalingPlan(conn, rs.Primary.Attributes["name"], scalingPlanVersion)
+		scalingPlan, err := tfautoscalingplans.FindScalingPlan(conn, rs.Primary.Attributes["name"], scalingPlanVersion)
 		if err != nil {
 			return err
 		}
