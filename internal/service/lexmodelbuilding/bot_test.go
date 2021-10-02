@@ -14,10 +14,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-sdk/v2/terraform"
 	"github.com/hashicorp/terraform-provider-aws/internal/acctest"
 	"github.com/hashicorp/terraform-provider-aws/internal/conns"
-	"github.com/hashicorp/terraform-provider-aws/internal/provider"
 	"github.com/hashicorp/terraform-provider-aws/internal/sweep"
-	tftags "github.com/hashicorp/terraform-provider-aws/internal/tags"
-	"github.com/hashicorp/terraform-provider-aws/internal/verify"
 )
 
 func init() {
@@ -80,7 +77,10 @@ func TestAccAwsLexBot_basic(t *testing.T) {
 	testBotID := "test_bot_" + sdkacctest.RandStringFromCharSet(8, sdkacctest.CharSetAlpha)
 
 	resource.ParallelTest(t, resource.TestCase{
-		PreCheck:     func() { acctest.PreCheck(t); acctest.PreCheckPartitionHasService(lexmodelbuildingservice.EndpointsID, t) },
+		PreCheck: func() {
+			acctest.PreCheck(t)
+			acctest.PreCheckPartitionHasService(lexmodelbuildingservice.EndpointsID, t)
+		},
 		ErrorCheck:   acctest.ErrorCheck(t, lexmodelbuildingservice.EndpointsID),
 		Providers:    acctest.Providers,
 		CheckDestroy: testAccCheckAwsLexBotDestroy,
@@ -149,7 +149,10 @@ func testAccAwsLexBot_createVersion(t *testing.T) {
 
 	// If this test runs in parallel with other Lex Bot tests, it loses its description
 	resource.Test(t, resource.TestCase{
-		PreCheck:     func() { acctest.PreCheck(t); acctest.PreCheckPartitionHasService(lexmodelbuildingservice.EndpointsID, t) },
+		PreCheck: func() {
+			acctest.PreCheck(t)
+			acctest.PreCheckPartitionHasService(lexmodelbuildingservice.EndpointsID, t)
+		},
 		ErrorCheck:   acctest.ErrorCheck(t, lexmodelbuildingservice.EndpointsID),
 		Providers:    acctest.Providers,
 		CheckDestroy: testAccCheckAwsLexBotDestroy,
@@ -193,7 +196,10 @@ func TestAccAwsLexBot_abortStatement(t *testing.T) {
 	testBotID := "test_bot_" + sdkacctest.RandStringFromCharSet(8, sdkacctest.CharSetAlpha)
 
 	resource.ParallelTest(t, resource.TestCase{
-		PreCheck:     func() { acctest.PreCheck(t); acctest.PreCheckPartitionHasService(lexmodelbuildingservice.EndpointsID, t) },
+		PreCheck: func() {
+			acctest.PreCheck(t)
+			acctest.PreCheckPartitionHasService(lexmodelbuildingservice.EndpointsID, t)
+		},
 		ErrorCheck:   acctest.ErrorCheck(t, lexmodelbuildingservice.EndpointsID),
 		Providers:    acctest.Providers,
 		CheckDestroy: testAccCheckAwsLexBotDestroy,
@@ -250,7 +256,10 @@ func TestAccAwsLexBot_clarificationPrompt(t *testing.T) {
 	testBotID := "test_bot_" + sdkacctest.RandStringFromCharSet(8, sdkacctest.CharSetAlpha)
 
 	resource.ParallelTest(t, resource.TestCase{
-		PreCheck:     func() { acctest.PreCheck(t); acctest.PreCheckPartitionHasService(lexmodelbuildingservice.EndpointsID, t) },
+		PreCheck: func() {
+			acctest.PreCheck(t)
+			acctest.PreCheckPartitionHasService(lexmodelbuildingservice.EndpointsID, t)
+		},
 		ErrorCheck:   acctest.ErrorCheck(t, lexmodelbuildingservice.EndpointsID),
 		Providers:    acctest.Providers,
 		CheckDestroy: testAccCheckAwsLexBotDestroy,
@@ -303,7 +312,10 @@ func TestAccAwsLexBot_childDirected(t *testing.T) {
 	testBotID := "test_bot_" + sdkacctest.RandStringFromCharSet(8, sdkacctest.CharSetAlpha)
 
 	resource.ParallelTest(t, resource.TestCase{
-		PreCheck:     func() { acctest.PreCheck(t); acctest.PreCheckPartitionHasService(lexmodelbuildingservice.EndpointsID, t) },
+		PreCheck: func() {
+			acctest.PreCheck(t)
+			acctest.PreCheckPartitionHasService(lexmodelbuildingservice.EndpointsID, t)
+		},
 		ErrorCheck:   acctest.ErrorCheck(t, lexmodelbuildingservice.EndpointsID),
 		Providers:    acctest.Providers,
 		CheckDestroy: testAccCheckAwsLexBotDestroy,
@@ -347,7 +359,10 @@ func TestAccAwsLexBot_description(t *testing.T) {
 	testBotID := "test_bot_" + sdkacctest.RandStringFromCharSet(8, sdkacctest.CharSetAlpha)
 
 	resource.ParallelTest(t, resource.TestCase{
-		PreCheck:     func() { acctest.PreCheck(t); acctest.PreCheckPartitionHasService(lexmodelbuildingservice.EndpointsID, t) },
+		PreCheck: func() {
+			acctest.PreCheck(t)
+			acctest.PreCheckPartitionHasService(lexmodelbuildingservice.EndpointsID, t)
+		},
 		ErrorCheck:   acctest.ErrorCheck(t, lexmodelbuildingservice.EndpointsID),
 		Providers:    acctest.Providers,
 		CheckDestroy: testAccCheckAwsLexBotDestroy,
@@ -391,7 +406,10 @@ func TestAccAwsLexBot_detectSentiment(t *testing.T) {
 	testBotID := "test_bot_" + sdkacctest.RandStringFromCharSet(8, sdkacctest.CharSetAlpha)
 
 	resource.ParallelTest(t, resource.TestCase{
-		PreCheck:     func() { acctest.PreCheck(t); acctest.PreCheckPartitionHasService(lexmodelbuildingservice.EndpointsID, t) },
+		PreCheck: func() {
+			acctest.PreCheck(t)
+			acctest.PreCheckPartitionHasService(lexmodelbuildingservice.EndpointsID, t)
+		},
 		ErrorCheck:   acctest.ErrorCheck(t, lexmodelbuildingservice.EndpointsID),
 		Providers:    acctest.Providers,
 		CheckDestroy: testAccCheckAwsLexBotDestroy,
@@ -435,7 +453,10 @@ func TestAccAwsLexBot_enableModelImprovements(t *testing.T) {
 	testBotID := "test_bot_" + sdkacctest.RandStringFromCharSet(8, sdkacctest.CharSetAlpha)
 
 	resource.ParallelTest(t, resource.TestCase{
-		PreCheck:     func() { acctest.PreCheck(t); acctest.PreCheckPartitionHasService(lexmodelbuildingservice.EndpointsID, t) },
+		PreCheck: func() {
+			acctest.PreCheck(t)
+			acctest.PreCheckPartitionHasService(lexmodelbuildingservice.EndpointsID, t)
+		},
 		ErrorCheck:   acctest.ErrorCheck(t, lexmodelbuildingservice.EndpointsID),
 		Providers:    acctest.Providers,
 		CheckDestroy: testAccCheckAwsLexBotDestroy,
@@ -480,7 +501,10 @@ func TestAccAwsLexBot_idleSessionTtlInSeconds(t *testing.T) {
 	testBotID := "test_bot_" + sdkacctest.RandStringFromCharSet(8, sdkacctest.CharSetAlpha)
 
 	resource.ParallelTest(t, resource.TestCase{
-		PreCheck:     func() { acctest.PreCheck(t); acctest.PreCheckPartitionHasService(lexmodelbuildingservice.EndpointsID, t) },
+		PreCheck: func() {
+			acctest.PreCheck(t)
+			acctest.PreCheckPartitionHasService(lexmodelbuildingservice.EndpointsID, t)
+		},
 		ErrorCheck:   acctest.ErrorCheck(t, lexmodelbuildingservice.EndpointsID),
 		Providers:    acctest.Providers,
 		CheckDestroy: testAccCheckAwsLexBotDestroy,
@@ -524,7 +548,10 @@ func TestAccAwsLexBot_intents(t *testing.T) {
 	testBotID := "test_bot_" + sdkacctest.RandStringFromCharSet(8, sdkacctest.CharSetAlpha)
 
 	resource.ParallelTest(t, resource.TestCase{
-		PreCheck:     func() { acctest.PreCheck(t); acctest.PreCheckPartitionHasService(lexmodelbuildingservice.EndpointsID, t) },
+		PreCheck: func() {
+			acctest.PreCheck(t)
+			acctest.PreCheckPartitionHasService(lexmodelbuildingservice.EndpointsID, t)
+		},
 		ErrorCheck:   acctest.ErrorCheck(t, lexmodelbuildingservice.EndpointsID),
 		Providers:    acctest.Providers,
 		CheckDestroy: testAccCheckAwsLexBotDestroy,
@@ -577,7 +604,10 @@ func TestAccAwsLexBot_computeVersion(t *testing.T) {
 	updatedVersion := "2"
 
 	resource.Test(t, resource.TestCase{
-		PreCheck:     func() { acctest.PreCheck(t); acctest.PreCheckPartitionHasService(lexmodelbuildingservice.EndpointsID, t) },
+		PreCheck: func() {
+			acctest.PreCheck(t)
+			acctest.PreCheckPartitionHasService(lexmodelbuildingservice.EndpointsID, t)
+		},
 		ErrorCheck:   acctest.ErrorCheck(t, lexmodelbuildingservice.EndpointsID),
 		Providers:    acctest.Providers,
 		CheckDestroy: testAccCheckAwsLexBotDestroy,
@@ -625,7 +655,10 @@ func TestAccAwsLexBot_locale(t *testing.T) {
 	testBotID := "test_bot_" + sdkacctest.RandStringFromCharSet(8, sdkacctest.CharSetAlpha)
 
 	resource.ParallelTest(t, resource.TestCase{
-		PreCheck:     func() { acctest.PreCheck(t); acctest.PreCheckPartitionHasService(lexmodelbuildingservice.EndpointsID, t) },
+		PreCheck: func() {
+			acctest.PreCheck(t)
+			acctest.PreCheckPartitionHasService(lexmodelbuildingservice.EndpointsID, t)
+		},
 		ErrorCheck:   acctest.ErrorCheck(t, lexmodelbuildingservice.EndpointsID),
 		Providers:    acctest.Providers,
 		CheckDestroy: testAccCheckAwsLexBotDestroy,
@@ -669,7 +702,10 @@ func TestAccAwsLexBot_voiceId(t *testing.T) {
 	testBotID := "test_bot_" + sdkacctest.RandStringFromCharSet(8, sdkacctest.CharSetAlpha)
 
 	resource.ParallelTest(t, resource.TestCase{
-		PreCheck:     func() { acctest.PreCheck(t); acctest.PreCheckPartitionHasService(lexmodelbuildingservice.EndpointsID, t) },
+		PreCheck: func() {
+			acctest.PreCheck(t)
+			acctest.PreCheckPartitionHasService(lexmodelbuildingservice.EndpointsID, t)
+		},
 		ErrorCheck:   acctest.ErrorCheck(t, lexmodelbuildingservice.EndpointsID),
 		Providers:    acctest.Providers,
 		CheckDestroy: testAccCheckAwsLexBotDestroy,
@@ -713,7 +749,10 @@ func TestAccAwsLexBot_disappears(t *testing.T) {
 	testBotID := "test_bot_" + sdkacctest.RandStringFromCharSet(8, sdkacctest.CharSetAlpha)
 
 	resource.ParallelTest(t, resource.TestCase{
-		PreCheck:     func() { acctest.PreCheck(t); acctest.PreCheckPartitionHasService(lexmodelbuildingservice.EndpointsID, t) },
+		PreCheck: func() {
+			acctest.PreCheck(t)
+			acctest.PreCheckPartitionHasService(lexmodelbuildingservice.EndpointsID, t)
+		},
 		ErrorCheck:   acctest.ErrorCheck(t, lexmodelbuildingservice.EndpointsID),
 		Providers:    acctest.Providers,
 		CheckDestroy: testAccCheckAwsLexBotDestroy,
