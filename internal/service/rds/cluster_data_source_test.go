@@ -11,7 +11,7 @@ import (
 )
 
 func TestAccDataSourceAWSRDSCluster_basic(t *testing.T) {
-	clusterName := fmt.Sprintf("testaccawsrdscluster-basic-%s", sdkacctest.RandString(10))
+	clusterName := fmt.Sprintf("testAccAWSrdscluster-basic-%s", sdkacctest.RandString(10))
 	dataSourceName := "data.aws_rds_cluster.test"
 	resourceName := "aws_rds_cluster.test"
 
@@ -21,7 +21,7 @@ func TestAccDataSourceAWSRDSCluster_basic(t *testing.T) {
 		Providers:  acctest.Providers,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccDataSourceAwsRdsClusterConfigBasic(clusterName),
+				Config: testAccClusterBasicDataSourceConfig(clusterName),
 				Check: resource.ComposeAggregateTestCheckFunc(
 					resource.TestCheckResourceAttrPair(dataSourceName, "arn", resourceName, "arn"),
 					resource.TestCheckResourceAttrPair(dataSourceName, "backtrack_window", resourceName, "backtrack_window"),
@@ -39,7 +39,7 @@ func TestAccDataSourceAWSRDSCluster_basic(t *testing.T) {
 	})
 }
 
-func testAccDataSourceAwsRdsClusterConfigBasic(clusterName string) string {
+func testAccClusterBasicDataSourceConfig(clusterName string) string {
 	return acctest.ConfigCompose(acctest.ConfigAvailableAZsNoOptIn(), fmt.Sprintf(`
 resource "aws_rds_cluster" "test" {
   cluster_identifier              = "%[1]s"
