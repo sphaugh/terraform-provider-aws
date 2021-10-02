@@ -1,4 +1,4 @@
-package aws
+package iot_test
 
 import (
 	"fmt"
@@ -8,13 +8,13 @@ import (
 	sdkacctest "github.com/hashicorp/terraform-plugin-sdk/v2/helper/acctest"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/resource"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/terraform"
-	"github.com/hashicorp/terraform-provider-aws/aws/internal/service/iot/finder"
-	"github.com/hashicorp/terraform-provider-aws/aws/internal/tfresource"
+	"github.com/hashicorp/terraform-provider-aws/internal/tfresource"
 	"github.com/hashicorp/terraform-provider-aws/internal/acctest"
 	"github.com/hashicorp/terraform-provider-aws/internal/conns"
 	"github.com/hashicorp/terraform-provider-aws/internal/provider"
 	tftags "github.com/hashicorp/terraform-provider-aws/internal/tags"
 	"github.com/hashicorp/terraform-provider-aws/internal/verify"
+	tfiot "github.com/hashicorp/terraform-provider-aws/internal/service/iot"
 )
 
 func TestAccAWSIoTAuthorizer_basic(t *testing.T) {
@@ -160,7 +160,7 @@ func testAccCheckAWSIoTAuthorizerExists(n string, v *iot.AuthorizerDescription) 
 
 		conn := acctest.Provider.Meta().(*conns.AWSClient).IoTConn
 
-		output, err := finder.AuthorizerByName(conn, rs.Primary.ID)
+		output, err := tfiot.AuthorizerByName(conn, rs.Primary.ID)
 
 		if err != nil {
 			return err
@@ -180,7 +180,7 @@ func testAccCheckAWSIoTAuthorizerDestroy(s *terraform.State) error {
 			continue
 		}
 
-		_, err := finder.AuthorizerByName(conn, rs.Primary.ID)
+		_, err := tfiot.AuthorizerByName(conn, rs.Primary.ID)
 
 		if tfresource.NotFound(err) {
 			continue
