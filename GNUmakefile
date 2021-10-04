@@ -85,7 +85,8 @@ docscheck:
 		-require-resource-subcategory
 	@misspell -error -source text CHANGELOG.md .changelog
 
-lint: golangci-lint providerlint importlint
+# lint: golangci-lint providerlint importlint
+lint: importlint
 
 golangci-lint:
 	@golangci-lint run ./$(PKG_NAME)/...
